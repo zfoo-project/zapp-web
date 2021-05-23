@@ -18,11 +18,15 @@
 
 - PWA，自适应页面
 - service worker实现
-- vue, vuetify
 - 百度和google页面统计
 - websocket实现聊天和群组频道聊天
 - axios实现普通http请求
 - SEO使用puppeteer在服务端渲染页面
+- vue
+- vue-meta，动态设置router标签
+- [vuetify](https://vuetifyjs.com/en/) 基础ui库
+- lodash
+- js-cookie
 
 
 ## 3.部署
@@ -86,10 +90,44 @@ npm cache clean --force
 - vue-router，界面路由
 - vuex，数据存储和交互
 - vuex-router-sync，使vue-router和vuex结合，https://blog.csdn.net/vv_bug/article/details/84064708
-- vue-meta，动态设置router标签
-- vuetify，基础ui库，https://vuetifyjs.com/en/getting-started/quick-start
 
-- axios，网络通信
-- js-cookie，cookie工具包
-- lodash，类似于hutools，提供了各种工具，https://www.lodashjs.com/docs/latest
 
+
+
+### Ⅳ. 功能截图
+
+- 图片浏览
+  ![Image text](img/home.png)
+
+- 大图预览
+  ![Image text](img/home1.png)
+
+- 图片下载
+  ![Image text](img/home2.png)
+
+- 视频播放
+  ![Image text](img/home3.png)
+
+- 分享收藏和点赞
+  ![Image text](img/home4.png)
+
+- 个人中心，资料，图片小圈子
+  ![Image text](img/home5.png)
+
+- 分享图片和视频
+  ![Image text](img/home6.png)
+
+- 好友聊天
+  ![Image text](img/home7.png)
+
+- 群组聊天
+  ![Image text](img/home8.png)
+
+- 频道聊天
+  ![Image text](img/home9.png)
+
+- 聊天发视频发图片
+  ![Image text](img/home10.png)
+
+- 登录/登出
+  ![Image text](img/home11.png)
