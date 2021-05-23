@@ -7,7 +7,7 @@ import './registerServiceWorker.js';
 import '@/plugin/base.js';
 import '@/plugin/lodash.js';
 import '@/plugin/vuelidate.js';
-import '@/plugin/protobuf.js';
+import '@/plugin/protocol.js';
 import '@/plugin/myPlugin.js';
 import '@/plugin/video.js';
 
