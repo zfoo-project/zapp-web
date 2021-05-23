@@ -14,15 +14,16 @@
 
 
 ## 2.项目概括
-- zfoo
-```
-是网站www.zfoo.com的前端项目，前后端分离
-zfoo项目的package.json和ztest的package.json内容是一样的，是一个公用的和公共的package.json
-```
-- ztest
-```
-是一个测试项目，会实践一些最新的技术或者集成一些最新的框架
-```
+- zfoo是原来的网站被GFW后的前端项目，前后端分离
+
+- PWA，自适应页面
+- service worker实现
+- vue, vuetify
+- 百度和google页面统计
+- websocket实现聊天和群组频道聊天
+- axios实现普通http请求
+- SEO使用puppeteer在服务端渲染页面
+
 
 ## 3.部署
 1. 打包过后，放在后端的spring boot中的static目录，使用spring boot当作静态资源服务器
