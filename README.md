@@ -25,9 +25,15 @@ zfoo项目的package.json和ztest的package.json内容是一样的，是一个�
 ```
 
 ## 3.部署
-- 两则替换
-- https://static.zfoo.com/manifest.json
-- https://www.zfoo.com/manifest.json
+1. 打包过后，放在后端的spring boot中的static目录，使用spring boot当作静态资源服务器
+  
+2. 或者将打包后的资源放在oss或者cdn上两者皆可
+
+```
+如果要使用service-worker需要将index.html中的下面链接替换，不使用请忽略
+https://static.zfoo.com/manifest.json
+https://www.zfoo.com/manifest.json
+```
 
 
 # 二、编码规范
