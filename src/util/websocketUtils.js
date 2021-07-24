@@ -145,7 +145,7 @@ export function sendPacket(packet) {
         // eslint-disable-next-line no-case-declarations
         const writeOffset = byteBuffer.writeOffset;
         byteBuffer.setWriteOffset(0);
-        byteBuffer.writeRawInt(byteBuffer.writeOffset - 4);
+        byteBuffer.writeRawInt(writeOffset - 4);
         byteBuffer.setWriteOffset(writeOffset);
         websocket.send(byteBuffer.buffer);
         break;
