@@ -16,40 +16,40 @@ GroupVO.prototype.protocolId = function() {
     return 18000;
 };
 
-GroupVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.adminId);
-    byteBuffer.writeString(packet.avatar);
-    byteBuffer.writeString(packet.background);
-    byteBuffer.writePacketArray(packet.channelBoxes, 18011);
-    byteBuffer.writeLong(packet.createTime);
-    byteBuffer.writePacketArray(packet.groupAuths, 18001);
-    byteBuffer.writeLong(packet.id);
-    byteBuffer.writeString(packet.name);
+    buffer.writeLong(packet.adminId);
+    buffer.writeString(packet.avatar);
+    buffer.writeString(packet.background);
+    buffer.writePacketArray(packet.channelBoxes, 18011);
+    buffer.writeLong(packet.createTime);
+    buffer.writePacketArray(packet.groupAuths, 18001);
+    buffer.writeLong(packet.id);
+    buffer.writeString(packet.name);
 };
 
-GroupVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupVO();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.adminId = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.avatar = result1;
-    const result2 = byteBuffer.readString();
+    const result2 = buffer.readString();
     packet.background = result2;
-    const list3 = byteBuffer.readPacketArray(18011);
+    const list3 = buffer.readPacketArray(18011);
     packet.channelBoxes = list3;
-    const result4 = byteBuffer.readLong();
+    const result4 = buffer.readLong();
     packet.createTime = result4;
-    const list5 = byteBuffer.readPacketArray(18001);
+    const list5 = buffer.readPacketArray(18001);
     packet.groupAuths = list5;
-    const result6 = byteBuffer.readLong();
+    const result6 = buffer.readLong();
     packet.id = result6;
-    const result7 = byteBuffer.readString();
+    const result7 = buffer.readString();
     packet.name = result7;
     return packet;
 };

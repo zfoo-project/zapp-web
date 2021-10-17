@@ -9,19 +9,19 @@ BlacklistResponse.prototype.protocolId = function() {
     return 15109;
 };
 
-BlacklistResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+BlacklistResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacket(packet.userCache, 3000);
+    buffer.writePacket(packet.userCache, 3000);
 };
 
-BlacklistResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+BlacklistResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new BlacklistResponse();
-    const result0 = byteBuffer.readPacket(3000);
+    const result0 = buffer.readPacket(3000);
     packet.userCache = result0;
     return packet;
 };

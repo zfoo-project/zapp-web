@@ -10,22 +10,22 @@ SaveGroupSettingRequest.prototype.protocolId = function() {
     return 18204;
 };
 
-SaveGroupSettingRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+SaveGroupSettingRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeString(packet.name);
+    buffer.writeLong(packet.groupId);
+    buffer.writeString(packet.name);
 };
 
-SaveGroupSettingRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+SaveGroupSettingRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new SaveGroupSettingRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.name = result1;
     return packet;
 };

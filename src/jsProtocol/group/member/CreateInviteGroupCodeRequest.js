@@ -13,25 +13,25 @@ CreateInviteGroupCodeRequest.prototype.protocolId = function() {
     return 18410;
 };
 
-CreateInviteGroupCodeRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+CreateInviteGroupCodeRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeInt(packet.countType);
-    byteBuffer.writeInt(packet.expireType);
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeInt(packet.countType);
+    buffer.writeInt(packet.expireType);
+    buffer.writeLong(packet.groupId);
 };
 
-CreateInviteGroupCodeRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+CreateInviteGroupCodeRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new CreateInviteGroupCodeRequest();
-    const result0 = byteBuffer.readInt();
+    const result0 = buffer.readInt();
     packet.countType = result0;
-    const result1 = byteBuffer.readInt();
+    const result1 = buffer.readInt();
     packet.expireType = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.groupId = result2;
     return packet;
 };

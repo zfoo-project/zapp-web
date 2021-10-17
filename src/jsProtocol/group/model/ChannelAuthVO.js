@@ -12,22 +12,22 @@ ChannelAuthVO.prototype.protocolId = function() {
     return 18012;
 };
 
-ChannelAuthVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+ChannelAuthVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeInt(packet.channelAuth);
-    byteBuffer.writeLong(packet.id);
+    buffer.writeInt(packet.channelAuth);
+    buffer.writeLong(packet.id);
 };
 
-ChannelAuthVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+ChannelAuthVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new ChannelAuthVO();
-    const result0 = byteBuffer.readInt();
+    const result0 = buffer.readInt();
     packet.channelAuth = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.id = result1;
     return packet;
 };

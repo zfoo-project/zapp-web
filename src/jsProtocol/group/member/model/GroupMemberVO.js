@@ -12,22 +12,22 @@ GroupMemberVO.prototype.protocolId = function() {
     return 18401;
 };
 
-GroupMemberVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupMemberVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLongArray(packet.groupAuthIds);
-    byteBuffer.writePacket(packet.userCache, 3000);
+    buffer.writeLongArray(packet.groupAuthIds);
+    buffer.writePacket(packet.userCache, 3000);
 };
 
-GroupMemberVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupMemberVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupMemberVO();
-    const list0 = byteBuffer.readLongArray();
+    const list0 = buffer.readLongArray();
     packet.groupAuthIds = list0;
-    const result1 = byteBuffer.readPacket(3000);
+    const result1 = buffer.readPacket(3000);
     packet.userCache = result1;
     return packet;
 };

@@ -11,25 +11,25 @@ FriendMessageNotice.prototype.protocolId = function() {
     return 16000;
 };
 
-FriendMessageNotice.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+FriendMessageNotice.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacket(packet.chatMessage, 120);
-    byteBuffer.writeLong(packet.uidA);
-    byteBuffer.writeLong(packet.uidB);
+    buffer.writePacket(packet.chatMessage, 120);
+    buffer.writeLong(packet.uidA);
+    buffer.writeLong(packet.uidB);
 };
 
-FriendMessageNotice.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+FriendMessageNotice.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new FriendMessageNotice();
-    const result0 = byteBuffer.readPacket(120);
+    const result0 = buffer.readPacket(120);
     packet.chatMessage = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.uidA = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.uidB = result2;
     return packet;
 };

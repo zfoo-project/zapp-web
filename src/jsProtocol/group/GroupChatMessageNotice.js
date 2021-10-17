@@ -11,25 +11,25 @@ GroupChatMessageNotice.prototype.protocolId = function() {
     return 19006;
 };
 
-GroupChatMessageNotice.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupChatMessageNotice.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.channelId);
-    byteBuffer.writePacket(packet.chatMessage, 120);
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.channelId);
+    buffer.writePacket(packet.chatMessage, 120);
+    buffer.writeLong(packet.groupId);
 };
 
-GroupChatMessageNotice.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupChatMessageNotice.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupChatMessageNotice();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.channelId = result0;
-    const result1 = byteBuffer.readPacket(120);
+    const result1 = buffer.readPacket(120);
     packet.chatMessage = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.groupId = result2;
     return packet;
 };

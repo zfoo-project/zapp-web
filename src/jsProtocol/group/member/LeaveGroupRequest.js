@@ -9,19 +9,19 @@ LeaveGroupRequest.prototype.protocolId = function() {
     return 18422;
 };
 
-LeaveGroupRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+LeaveGroupRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.groupId);
 };
 
-LeaveGroupRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+LeaveGroupRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new LeaveGroupRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
     return packet;
 };

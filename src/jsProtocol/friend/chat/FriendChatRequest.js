@@ -14,28 +14,28 @@ FriendChatRequest.prototype.protocolId = function() {
     return 15200;
 };
 
-FriendChatRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+FriendChatRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.chatMessage);
-    byteBuffer.writeLong(packet.friendId);
-    byteBuffer.writeByte(packet.type);
-    byteBuffer.writeLong(packet.userId);
+    buffer.writeString(packet.chatMessage);
+    buffer.writeLong(packet.friendId);
+    buffer.writeByte(packet.type);
+    buffer.writeLong(packet.userId);
 };
 
-FriendChatRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+FriendChatRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new FriendChatRequest();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.chatMessage = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.friendId = result1;
-    const result2 = byteBuffer.readByte();
+    const result2 = buffer.readByte();
     packet.type = result2;
-    const result3 = byteBuffer.readLong();
+    const result3 = buffer.readLong();
     packet.userId = result3;
     return packet;
 };

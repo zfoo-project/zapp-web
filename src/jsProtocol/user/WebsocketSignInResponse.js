@@ -17,37 +17,37 @@ WebsocketSignInResponse.prototype.protocolId = function() {
     return 1001;
 };
 
-WebsocketSignInResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+WebsocketSignInResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacketArray(packet.applyFriends, 15000);
-    byteBuffer.writePacketArray(packet.blacklist, 3000);
-    byteBuffer.writeLongPacketMap(packet.friendInfoMap, 15001);
-    byteBuffer.writePacketArray(packet.friends, 3000);
-    byteBuffer.writePacketArray(packet.groupMemberSimpleVOs, 18013);
-    byteBuffer.writePacketArray(packet.groups, 18000);
-    byteBuffer.writeLong(packet.userId);
+    buffer.writePacketArray(packet.applyFriends, 15000);
+    buffer.writePacketArray(packet.blacklist, 3000);
+    buffer.writeLongPacketMap(packet.friendInfoMap, 15001);
+    buffer.writePacketArray(packet.friends, 3000);
+    buffer.writePacketArray(packet.groupMemberSimpleVOs, 18013);
+    buffer.writePacketArray(packet.groups, 18000);
+    buffer.writeLong(packet.userId);
 };
 
-WebsocketSignInResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+WebsocketSignInResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new WebsocketSignInResponse();
-    const list0 = byteBuffer.readPacketArray(15000);
+    const list0 = buffer.readPacketArray(15000);
     packet.applyFriends = list0;
-    const list1 = byteBuffer.readPacketArray(3000);
+    const list1 = buffer.readPacketArray(3000);
     packet.blacklist = list1;
-    const map2 = byteBuffer.readLongPacketMap(15001);
+    const map2 = buffer.readLongPacketMap(15001);
     packet.friendInfoMap = map2;
-    const list3 = byteBuffer.readPacketArray(3000);
+    const list3 = buffer.readPacketArray(3000);
     packet.friends = list3;
-    const list4 = byteBuffer.readPacketArray(18013);
+    const list4 = buffer.readPacketArray(18013);
     packet.groupMemberSimpleVOs = list4;
-    const list5 = byteBuffer.readPacketArray(18000);
+    const list5 = buffer.readPacketArray(18000);
     packet.groups = list5;
-    const result6 = byteBuffer.readLong();
+    const result6 = buffer.readLong();
     packet.userId = result6;
     return packet;
 };

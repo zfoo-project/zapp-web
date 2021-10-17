@@ -13,31 +13,31 @@ InviteCodeVO.prototype.protocolId = function() {
     return 18400;
 };
 
-InviteCodeVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+InviteCodeVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.code);
-    byteBuffer.writeInt(packet.count);
-    byteBuffer.writeInt(packet.countType);
-    byteBuffer.writeLong(packet.expireTime);
-    byteBuffer.writeInt(packet.expireType);
+    buffer.writeString(packet.code);
+    buffer.writeInt(packet.count);
+    buffer.writeInt(packet.countType);
+    buffer.writeLong(packet.expireTime);
+    buffer.writeInt(packet.expireType);
 };
 
-InviteCodeVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+InviteCodeVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new InviteCodeVO();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.code = result0;
-    const result1 = byteBuffer.readInt();
+    const result1 = buffer.readInt();
     packet.count = result1;
-    const result2 = byteBuffer.readInt();
+    const result2 = buffer.readInt();
     packet.countType = result2;
-    const result3 = byteBuffer.readLong();
+    const result3 = buffer.readLong();
     packet.expireTime = result3;
-    const result4 = byteBuffer.readInt();
+    const result4 = buffer.readInt();
     packet.expireType = result4;
     return packet;
 };

@@ -8,25 +8,25 @@ TripleLSS.prototype.protocolId = function() {
     return 116;
 };
 
-TripleLSS.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+TripleLSS.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.left);
-    byteBuffer.writeString(packet.middle);
-    byteBuffer.writeString(packet.right);
+    buffer.writeLong(packet.left);
+    buffer.writeString(packet.middle);
+    buffer.writeString(packet.right);
 };
 
-TripleLSS.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+TripleLSS.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new TripleLSS();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.left = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.middle = result1;
-    const result2 = byteBuffer.readString();
+    const result2 = buffer.readString();
     packet.right = result2;
     return packet;
 };

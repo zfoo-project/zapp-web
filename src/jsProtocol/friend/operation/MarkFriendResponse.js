@@ -11,22 +11,22 @@ MarkFriendResponse.prototype.protocolId = function() {
     return 15113;
 };
 
-MarkFriendResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+MarkFriendResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.friendId);
-    byteBuffer.writeString(packet.tag);
+    buffer.writeLong(packet.friendId);
+    buffer.writeString(packet.tag);
 };
 
-MarkFriendResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+MarkFriendResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new MarkFriendResponse();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.friendId = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.tag = result1;
     return packet;
 };

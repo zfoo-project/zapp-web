@@ -10,22 +10,22 @@ DeleteGroupNotice.prototype.protocolId = function() {
     return 19000;
 };
 
-DeleteGroupNotice.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+DeleteGroupNotice.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeString(packet.groupName);
+    buffer.writeLong(packet.groupId);
+    buffer.writeString(packet.groupName);
 };
 
-DeleteGroupNotice.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+DeleteGroupNotice.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new DeleteGroupNotice();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.groupName = result1;
     return packet;
 };

@@ -9,19 +9,19 @@ DeleteGroupRequest.prototype.protocolId = function() {
     return 18530;
 };
 
-DeleteGroupRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+DeleteGroupRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.groupId);
 };
 
-DeleteGroupRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+DeleteGroupRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new DeleteGroupRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
     return packet;
 };

@@ -10,22 +10,22 @@ MuteGroupRequest.prototype.protocolId = function() {
     return 1312;
 };
 
-MuteGroupRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+MuteGroupRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeBoolean(packet.mute);
+    buffer.writeLong(packet.groupId);
+    buffer.writeBoolean(packet.mute);
 };
 
-MuteGroupRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+MuteGroupRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new MuteGroupRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
-    const result1 = byteBuffer.readBoolean(); 
+    const result1 = buffer.readBoolean(); 
     packet.mute = result1;
     return packet;
 };

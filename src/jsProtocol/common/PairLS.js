@@ -7,22 +7,22 @@ PairLS.prototype.protocolId = function() {
     return 113;
 };
 
-PairLS.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+PairLS.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.key);
-    byteBuffer.writeString(packet.value);
+    buffer.writeLong(packet.key);
+    buffer.writeString(packet.value);
 };
 
-PairLS.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+PairLS.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new PairLS();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.key = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.value = result1;
     return packet;
 };

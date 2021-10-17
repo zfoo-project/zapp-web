@@ -8,14 +8,14 @@ SaveGroupAuthResponse.prototype.protocolId = function() {
     return 18503;
 };
 
-SaveGroupAuthResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+SaveGroupAuthResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
 };
 
-SaveGroupAuthResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+SaveGroupAuthResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new SaveGroupAuthResponse();

@@ -13,25 +13,25 @@ FriendHistoryMessageResponse.prototype.protocolId = function() {
     return 15205;
 };
 
-FriendHistoryMessageResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+FriendHistoryMessageResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacketArray(packet.chatMessages, 120);
-    byteBuffer.writeLong(packet.uidA);
-    byteBuffer.writeLong(packet.uidB);
+    buffer.writePacketArray(packet.chatMessages, 120);
+    buffer.writeLong(packet.uidA);
+    buffer.writeLong(packet.uidB);
 };
 
-FriendHistoryMessageResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+FriendHistoryMessageResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new FriendHistoryMessageResponse();
-    const list0 = byteBuffer.readPacketArray(120);
+    const list0 = buffer.readPacketArray(120);
     packet.chatMessages = list0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.uidA = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.uidB = result2;
     return packet;
 };

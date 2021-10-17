@@ -11,22 +11,22 @@ CreateGroupAuthRequest.prototype.protocolId = function() {
     return 18500;
 };
 
-CreateGroupAuthRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+CreateGroupAuthRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeString(packet.name);
+    buffer.writeLong(packet.groupId);
+    buffer.writeString(packet.name);
 };
 
-CreateGroupAuthRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+CreateGroupAuthRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new CreateGroupAuthRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.name = result1;
     return packet;
 };

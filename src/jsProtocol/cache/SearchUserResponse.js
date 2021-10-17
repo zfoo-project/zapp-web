@@ -9,19 +9,19 @@ SearchUserResponse.prototype.protocolId = function() {
     return 3031;
 };
 
-SearchUserResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+SearchUserResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacketArray(packet.userCaches, 3000);
+    buffer.writePacketArray(packet.userCaches, 3000);
 };
 
-SearchUserResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+SearchUserResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new SearchUserResponse();
-    const list0 = byteBuffer.readPacketArray(3000);
+    const list0 = buffer.readPacketArray(3000);
     packet.userCaches = list0;
     return packet;
 };

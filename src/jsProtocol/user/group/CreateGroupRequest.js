@@ -11,19 +11,19 @@ CreateGroupRequest.prototype.protocolId = function() {
     return 1300;
 };
 
-CreateGroupRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+CreateGroupRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.groupName);
+    buffer.writeString(packet.groupName);
 };
 
-CreateGroupRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+CreateGroupRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new CreateGroupRequest();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.groupName = result0;
     return packet;
 };

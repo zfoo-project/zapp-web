@@ -12,25 +12,25 @@ MarkFriendRequest.prototype.protocolId = function() {
     return 15112;
 };
 
-MarkFriendRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+MarkFriendRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.friendId);
-    byteBuffer.writeString(packet.tag);
-    byteBuffer.writeLong(packet.userId);
+    buffer.writeLong(packet.friendId);
+    buffer.writeString(packet.tag);
+    buffer.writeLong(packet.userId);
 };
 
-MarkFriendRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+MarkFriendRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new MarkFriendRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.friendId = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.tag = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.userId = result2;
     return packet;
 };

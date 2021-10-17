@@ -9,19 +9,19 @@ CreateChannelResponse.prototype.protocolId = function() {
     return 18303;
 };
 
-CreateChannelResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+CreateChannelResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacket(packet.groupVO, 18000);
+    buffer.writePacket(packet.groupVO, 18000);
 };
 
-CreateChannelResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+CreateChannelResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new CreateChannelResponse();
-    const result0 = byteBuffer.readPacket(18000);
+    const result0 = buffer.readPacket(18000);
     packet.groupVO = result0;
     return packet;
 };

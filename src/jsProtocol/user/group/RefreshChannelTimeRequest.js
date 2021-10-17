@@ -12,28 +12,28 @@ RefreshChannelTimeRequest.prototype.protocolId = function() {
     return 1310;
 };
 
-RefreshChannelTimeRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+RefreshChannelTimeRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLongArray(packet.allChannelIds);
-    byteBuffer.writeLong(packet.channelId);
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeLong(packet.refreshTime);
+    buffer.writeLongArray(packet.allChannelIds);
+    buffer.writeLong(packet.channelId);
+    buffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.refreshTime);
 };
 
-RefreshChannelTimeRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+RefreshChannelTimeRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new RefreshChannelTimeRequest();
-    const list0 = byteBuffer.readLongArray();
+    const list0 = buffer.readLongArray();
     packet.allChannelIds = list0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.channelId = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.groupId = result2;
-    const result3 = byteBuffer.readLong();
+    const result3 = buffer.readLong();
     packet.refreshTime = result3;
     return packet;
 };

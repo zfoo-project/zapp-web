@@ -9,19 +9,19 @@ AllInviteGroupCodeRequest.prototype.protocolId = function() {
     return 18424;
 };
 
-AllInviteGroupCodeRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+AllInviteGroupCodeRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.groupId);
 };
 
-AllInviteGroupCodeRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+AllInviteGroupCodeRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new AllInviteGroupCodeRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
     return packet;
 };

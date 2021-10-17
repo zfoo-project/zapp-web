@@ -10,22 +10,22 @@ NewFriendNotice.prototype.protocolId = function() {
     return 16002;
 };
 
-NewFriendNotice.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+NewFriendNotice.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacket(packet.userCacheA, 3000);
-    byteBuffer.writePacket(packet.userCacheB, 3000);
+    buffer.writePacket(packet.userCacheA, 3000);
+    buffer.writePacket(packet.userCacheB, 3000);
 };
 
-NewFriendNotice.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+NewFriendNotice.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new NewFriendNotice();
-    const result0 = byteBuffer.readPacket(3000);
+    const result0 = buffer.readPacket(3000);
     packet.userCacheA = result0;
-    const result1 = byteBuffer.readPacket(3000);
+    const result1 = buffer.readPacket(3000);
     packet.userCacheB = result1;
     return packet;
 };

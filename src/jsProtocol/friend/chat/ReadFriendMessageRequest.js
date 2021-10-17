@@ -12,22 +12,22 @@ ReadFriendMessageRequest.prototype.protocolId = function() {
     return 15202;
 };
 
-ReadFriendMessageRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+ReadFriendMessageRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.friendId);
-    byteBuffer.writeLong(packet.userId);
+    buffer.writeLong(packet.friendId);
+    buffer.writeLong(packet.userId);
 };
 
-ReadFriendMessageRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+ReadFriendMessageRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new ReadFriendMessageRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.friendId = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.userId = result1;
     return packet;
 };

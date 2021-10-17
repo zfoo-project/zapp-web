@@ -9,19 +9,19 @@ WebsocketSignInRequest.prototype.protocolId = function() {
     return 1000;
 };
 
-WebsocketSignInRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+WebsocketSignInRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.token);
+    buffer.writeString(packet.token);
 };
 
-WebsocketSignInRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+WebsocketSignInRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new WebsocketSignInRequest();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.token = result0;
     return packet;
 };

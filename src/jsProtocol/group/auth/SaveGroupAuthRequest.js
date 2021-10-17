@@ -10,22 +10,22 @@ SaveGroupAuthRequest.prototype.protocolId = function() {
     return 18502;
 };
 
-SaveGroupAuthRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+SaveGroupAuthRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacketArray(packet.groupAuths, 18001);
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writePacketArray(packet.groupAuths, 18001);
+    buffer.writeLong(packet.groupId);
 };
 
-SaveGroupAuthRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+SaveGroupAuthRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new SaveGroupAuthRequest();
-    const list0 = byteBuffer.readPacketArray(18001);
+    const list0 = buffer.readPacketArray(18001);
     packet.groupAuths = list0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.groupId = result1;
     return packet;
 };

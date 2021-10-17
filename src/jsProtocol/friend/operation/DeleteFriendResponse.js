@@ -9,19 +9,19 @@ DeleteFriendResponse.prototype.protocolId = function() {
     return 15107;
 };
 
-DeleteFriendResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+DeleteFriendResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.friendId);
+    buffer.writeLong(packet.friendId);
 };
 
-DeleteFriendResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+DeleteFriendResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new DeleteFriendResponse();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.friendId = result0;
     return packet;
 };

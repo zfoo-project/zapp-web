@@ -9,19 +9,19 @@ DeleteInviteGroupCodeRequest.prototype.protocolId = function() {
     return 18420;
 };
 
-DeleteInviteGroupCodeRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+DeleteInviteGroupCodeRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.inviteCode);
+    buffer.writeString(packet.inviteCode);
 };
 
-DeleteInviteGroupCodeRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+DeleteInviteGroupCodeRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new DeleteInviteGroupCodeRequest();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.inviteCode = result0;
     return packet;
 };

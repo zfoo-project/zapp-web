@@ -15,28 +15,28 @@ GroupAuthVO.prototype.protocolId = function() {
     return 18001;
 };
 
-GroupAuthVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupAuthVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.color);
-    byteBuffer.writeInt(packet.groupAuth);
-    byteBuffer.writeLong(packet.id);
-    byteBuffer.writeString(packet.name);
+    buffer.writeString(packet.color);
+    buffer.writeInt(packet.groupAuth);
+    buffer.writeLong(packet.id);
+    buffer.writeString(packet.name);
 };
 
-GroupAuthVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupAuthVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupAuthVO();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.color = result0;
-    const result1 = byteBuffer.readInt();
+    const result1 = buffer.readInt();
     packet.groupAuth = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.id = result2;
-    const result3 = byteBuffer.readString();
+    const result3 = buffer.readString();
     packet.name = result3;
     return packet;
 };

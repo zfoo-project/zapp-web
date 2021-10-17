@@ -8,25 +8,25 @@ TripleLong.prototype.protocolId = function() {
     return 114;
 };
 
-TripleLong.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+TripleLong.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.left);
-    byteBuffer.writeLong(packet.middle);
-    byteBuffer.writeLong(packet.right);
+    buffer.writeLong(packet.left);
+    buffer.writeLong(packet.middle);
+    buffer.writeLong(packet.right);
 };
 
-TripleLong.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+TripleLong.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new TripleLong();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.left = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.middle = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.right = result2;
     return packet;
 };

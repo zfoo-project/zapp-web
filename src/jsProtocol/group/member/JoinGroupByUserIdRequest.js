@@ -9,19 +9,19 @@ JoinGroupByUserIdRequest.prototype.protocolId = function() {
     return 18414;
 };
 
-JoinGroupByUserIdRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+JoinGroupByUserIdRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.userId);
+    buffer.writeLong(packet.userId);
 };
 
-JoinGroupByUserIdRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+JoinGroupByUserIdRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new JoinGroupByUserIdRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.userId = result0;
     return packet;
 };

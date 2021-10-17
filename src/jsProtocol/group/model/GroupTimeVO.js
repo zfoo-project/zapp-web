@@ -11,25 +11,25 @@ GroupTimeVO.prototype.protocolId = function() {
     return 18014;
 };
 
-GroupTimeVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupTimeVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacketArray(packet.channelTimes, 18015);
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeBoolean(packet.mute);
+    buffer.writePacketArray(packet.channelTimes, 18015);
+    buffer.writeLong(packet.groupId);
+    buffer.writeBoolean(packet.mute);
 };
 
-GroupTimeVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupTimeVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupTimeVO();
-    const list0 = byteBuffer.readPacketArray(18015);
+    const list0 = buffer.readPacketArray(18015);
     packet.channelTimes = list0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.groupId = result1;
-    const result2 = byteBuffer.readBoolean(); 
+    const result2 = buffer.readBoolean(); 
     packet.mute = result2;
     return packet;
 };

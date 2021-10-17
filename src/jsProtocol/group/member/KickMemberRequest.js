@@ -10,22 +10,22 @@ KickMemberRequest.prototype.protocolId = function() {
     return 18434;
 };
 
-KickMemberRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+KickMemberRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeLong(packet.memberId);
+    buffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.memberId);
 };
 
-KickMemberRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+KickMemberRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new KickMemberRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.memberId = result1;
     return packet;
 };

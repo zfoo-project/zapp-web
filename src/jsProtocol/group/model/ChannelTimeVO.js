@@ -11,25 +11,25 @@ ChannelTimeVO.prototype.protocolId = function() {
     return 18015;
 };
 
-ChannelTimeVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+ChannelTimeVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.channelId);
-    byteBuffer.writeBoolean(packet.mute);
-    byteBuffer.writeLong(packet.refreshTime);
+    buffer.writeLong(packet.channelId);
+    buffer.writeBoolean(packet.mute);
+    buffer.writeLong(packet.refreshTime);
 };
 
-ChannelTimeVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+ChannelTimeVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new ChannelTimeVO();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.channelId = result0;
-    const result1 = byteBuffer.readBoolean(); 
+    const result1 = buffer.readBoolean(); 
     packet.mute = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.refreshTime = result2;
     return packet;
 };

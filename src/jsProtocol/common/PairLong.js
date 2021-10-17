@@ -7,22 +7,22 @@ PairLong.prototype.protocolId = function() {
     return 111;
 };
 
-PairLong.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+PairLong.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.key);
-    byteBuffer.writeLong(packet.value);
+    buffer.writeLong(packet.key);
+    buffer.writeLong(packet.value);
 };
 
-PairLong.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+PairLong.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new PairLong();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.key = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.value = result1;
     return packet;
 };

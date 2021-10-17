@@ -9,19 +9,19 @@ NewApplyFriendNotice.prototype.protocolId = function() {
     return 16001;
 };
 
-NewApplyFriendNotice.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+NewApplyFriendNotice.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacket(packet.applyFriendVO, 15000);
+    buffer.writePacket(packet.applyFriendVO, 15000);
 };
 
-NewApplyFriendNotice.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+NewApplyFriendNotice.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new NewApplyFriendNotice();
-    const result0 = byteBuffer.readPacket(15000);
+    const result0 = buffer.readPacket(15000);
     packet.applyFriendVO = result0;
     return packet;
 };

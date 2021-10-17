@@ -9,19 +9,19 @@ GroupUpdateNotice.prototype.protocolId = function() {
     return 19001;
 };
 
-GroupUpdateNotice.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupUpdateNotice.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacket(packet.groupVO, 18000);
+    buffer.writePacket(packet.groupVO, 18000);
 };
 
-GroupUpdateNotice.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupUpdateNotice.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupUpdateNotice();
-    const result0 = byteBuffer.readPacket(18000);
+    const result0 = buffer.readPacket(18000);
     packet.groupVO = result0;
     return packet;
 };

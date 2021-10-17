@@ -10,22 +10,22 @@ TimeLinkAlbumVO.prototype.protocolId = function() {
     return 133;
 };
 
-TimeLinkAlbumVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+TimeLinkAlbumVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.album);
-    byteBuffer.writeLongArray(packet.links);
+    buffer.writeString(packet.album);
+    buffer.writeLongArray(packet.links);
 };
 
-TimeLinkAlbumVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+TimeLinkAlbumVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new TimeLinkAlbumVO();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.album = result0;
-    const list1 = byteBuffer.readLongArray();
+    const list1 = buffer.readLongArray();
     packet.links = list1;
     return packet;
 };

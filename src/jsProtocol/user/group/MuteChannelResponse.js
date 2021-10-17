@@ -12,28 +12,28 @@ MuteChannelResponse.prototype.protocolId = function() {
     return 1315;
 };
 
-MuteChannelResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+MuteChannelResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.channelId);
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeBoolean(packet.mute);
-    byteBuffer.writeLong(packet.refreshTime);
+    buffer.writeLong(packet.channelId);
+    buffer.writeLong(packet.groupId);
+    buffer.writeBoolean(packet.mute);
+    buffer.writeLong(packet.refreshTime);
 };
 
-MuteChannelResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+MuteChannelResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new MuteChannelResponse();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.channelId = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.groupId = result1;
-    const result2 = byteBuffer.readBoolean(); 
+    const result2 = buffer.readBoolean(); 
     packet.mute = result2;
-    const result3 = byteBuffer.readLong();
+    const result3 = buffer.readLong();
     packet.refreshTime = result3;
     return packet;
 };

@@ -7,22 +7,22 @@ PairString.prototype.protocolId = function() {
     return 112;
 };
 
-PairString.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+PairString.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.key);
-    byteBuffer.writeString(packet.value);
+    buffer.writeString(packet.key);
+    buffer.writeString(packet.value);
 };
 
-PairString.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+PairString.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new PairString();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.key = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.value = result1;
     return packet;
 };

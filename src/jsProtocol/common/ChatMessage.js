@@ -19,40 +19,40 @@ ChatMessage.prototype.protocolId = function() {
     return 120;
 };
 
-ChatMessage.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+ChatMessage.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.avatar);
-    byteBuffer.writeLong(packet.id);
-    byteBuffer.writeString(packet.message);
-    byteBuffer.writeString(packet.name);
-    byteBuffer.writeBoolean(packet.read);
-    byteBuffer.writeLong(packet.sendId);
-    byteBuffer.writeLong(packet.timestamp);
-    byteBuffer.writeByte(packet.type);
+    buffer.writeString(packet.avatar);
+    buffer.writeLong(packet.id);
+    buffer.writeString(packet.message);
+    buffer.writeString(packet.name);
+    buffer.writeBoolean(packet.read);
+    buffer.writeLong(packet.sendId);
+    buffer.writeLong(packet.timestamp);
+    buffer.writeByte(packet.type);
 };
 
-ChatMessage.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+ChatMessage.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new ChatMessage();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.avatar = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.id = result1;
-    const result2 = byteBuffer.readString();
+    const result2 = buffer.readString();
     packet.message = result2;
-    const result3 = byteBuffer.readString();
+    const result3 = buffer.readString();
     packet.name = result3;
-    const result4 = byteBuffer.readBoolean(); 
+    const result4 = buffer.readBoolean(); 
     packet.read = result4;
-    const result5 = byteBuffer.readLong();
+    const result5 = buffer.readLong();
     packet.sendId = result5;
-    const result6 = byteBuffer.readLong();
+    const result6 = buffer.readLong();
     packet.timestamp = result6;
-    const result7 = byteBuffer.readByte();
+    const result7 = buffer.readByte();
     packet.type = result7;
     return packet;
 };

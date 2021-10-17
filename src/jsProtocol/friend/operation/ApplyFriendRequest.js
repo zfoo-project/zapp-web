@@ -10,22 +10,22 @@ ApplyFriendRequest.prototype.protocolId = function() {
     return 15100;
 };
 
-ApplyFriendRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+ApplyFriendRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.friendId);
-    byteBuffer.writeLong(packet.userId);
+    buffer.writeLong(packet.friendId);
+    buffer.writeLong(packet.userId);
 };
 
-ApplyFriendRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+ApplyFriendRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new ApplyFriendRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.friendId = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.userId = result1;
     return packet;
 };

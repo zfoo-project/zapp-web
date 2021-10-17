@@ -11,25 +11,25 @@ CreateChannelRequest.prototype.protocolId = function() {
     return 18302;
 };
 
-CreateChannelRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+CreateChannelRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.channelBoxName);
-    byteBuffer.writeString(packet.channelName);
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeString(packet.channelBoxName);
+    buffer.writeString(packet.channelName);
+    buffer.writeLong(packet.groupId);
 };
 
-CreateChannelRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+CreateChannelRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new CreateChannelRequest();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.channelBoxName = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.channelName = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.groupId = result2;
     return packet;
 };

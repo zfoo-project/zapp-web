@@ -9,19 +9,19 @@ DeleteChannelBoxResponse.prototype.protocolId = function() {
     return 18305;
 };
 
-DeleteChannelBoxResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+DeleteChannelBoxResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writePacket(packet.groupVO, 18000);
+    buffer.writePacket(packet.groupVO, 18000);
 };
 
-DeleteChannelBoxResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+DeleteChannelBoxResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new DeleteChannelBoxResponse();
-    const result0 = byteBuffer.readPacket(18000);
+    const result0 = buffer.readPacket(18000);
     packet.groupVO = result0;
     return packet;
 };

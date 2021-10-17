@@ -9,19 +9,19 @@ RejectFriendResponse.prototype.protocolId = function() {
     return 15103;
 };
 
-RejectFriendResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+RejectFriendResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.friendId);
+    buffer.writeLong(packet.friendId);
 };
 
-RejectFriendResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+RejectFriendResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new RejectFriendResponse();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.friendId = result0;
     return packet;
 };

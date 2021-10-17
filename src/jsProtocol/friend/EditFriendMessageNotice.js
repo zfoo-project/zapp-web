@@ -12,28 +12,28 @@ EditFriendMessageNotice.prototype.protocolId = function() {
     return 16004;
 };
 
-EditFriendMessageNotice.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+EditFriendMessageNotice.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeString(packet.chatMessage);
-    byteBuffer.writeLong(packet.messageId);
-    byteBuffer.writeLong(packet.uidA);
-    byteBuffer.writeLong(packet.uidB);
+    buffer.writeString(packet.chatMessage);
+    buffer.writeLong(packet.messageId);
+    buffer.writeLong(packet.uidA);
+    buffer.writeLong(packet.uidB);
 };
 
-EditFriendMessageNotice.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+EditFriendMessageNotice.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new EditFriendMessageNotice();
-    const result0 = byteBuffer.readString();
+    const result0 = buffer.readString();
     packet.chatMessage = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.messageId = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.uidA = result2;
-    const result3 = byteBuffer.readLong();
+    const result3 = buffer.readLong();
     packet.uidB = result3;
     return packet;
 };

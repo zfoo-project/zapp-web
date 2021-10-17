@@ -8,25 +8,25 @@ Message.prototype.protocolId = function() {
     return 100;
 };
 
-Message.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+Message.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeInt(packet.code);
-    byteBuffer.writeString(packet.message);
-    byteBuffer.writeByte(packet.module);
+    buffer.writeInt(packet.code);
+    buffer.writeString(packet.message);
+    buffer.writeByte(packet.module);
 };
 
-Message.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+Message.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new Message();
-    const result0 = byteBuffer.readInt();
+    const result0 = buffer.readInt();
     packet.code = result0;
-    const result1 = byteBuffer.readString();
+    const result1 = buffer.readString();
     packet.message = result1;
-    const result2 = byteBuffer.readByte();
+    const result2 = buffer.readByte();
     packet.module = result2;
     return packet;
 };

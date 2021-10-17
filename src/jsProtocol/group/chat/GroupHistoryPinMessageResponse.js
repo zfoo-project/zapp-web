@@ -14,28 +14,28 @@ GroupHistoryPinMessageResponse.prototype.protocolId = function() {
     return 18113;
 };
 
-GroupHistoryPinMessageResponse.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupHistoryPinMessageResponse.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.channelId);
-    byteBuffer.writePacketArray(packet.chatMessages, 120);
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeLong(packet.lastMessageId);
+    buffer.writeLong(packet.channelId);
+    buffer.writePacketArray(packet.chatMessages, 120);
+    buffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.lastMessageId);
 };
 
-GroupHistoryPinMessageResponse.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupHistoryPinMessageResponse.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupHistoryPinMessageResponse();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.channelId = result0;
-    const list1 = byteBuffer.readPacketArray(120);
+    const list1 = buffer.readPacketArray(120);
     packet.chatMessages = list1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.groupId = result2;
-    const result3 = byteBuffer.readLong();
+    const result3 = buffer.readLong();
     packet.lastMessageId = result3;
     return packet;
 };

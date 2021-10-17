@@ -10,22 +10,22 @@ DeleteGroupAuthRequest.prototype.protocolId = function() {
     return 18501;
 };
 
-DeleteGroupAuthRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+DeleteGroupAuthRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupAuthId);
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.groupAuthId);
+    buffer.writeLong(packet.groupId);
 };
 
-DeleteGroupAuthRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+DeleteGroupAuthRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new DeleteGroupAuthRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupAuthId = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.groupId = result1;
     return packet;
 };

@@ -14,25 +14,25 @@ GroupHistoryMessageRequest.prototype.protocolId = function() {
     return 18102;
 };
 
-GroupHistoryMessageRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupHistoryMessageRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.channelId);
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeLong(packet.lastMessageId);
+    buffer.writeLong(packet.channelId);
+    buffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.lastMessageId);
 };
 
-GroupHistoryMessageRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupHistoryMessageRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupHistoryMessageRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.channelId = result0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.groupId = result1;
-    const result2 = byteBuffer.readLong();
+    const result2 = buffer.readLong();
     packet.lastMessageId = result2;
     return packet;
 };

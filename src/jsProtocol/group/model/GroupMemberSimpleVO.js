@@ -12,28 +12,28 @@ GroupMemberSimpleVO.prototype.protocolId = function() {
     return 18013;
 };
 
-GroupMemberSimpleVO.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupMemberSimpleVO.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLongArray(packet.groupAuthIds);
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writePacket(packet.groupTime, 18014);
-    byteBuffer.writeLong(packet.memberId);
+    buffer.writeLongArray(packet.groupAuthIds);
+    buffer.writeLong(packet.groupId);
+    buffer.writePacket(packet.groupTime, 18014);
+    buffer.writeLong(packet.memberId);
 };
 
-GroupMemberSimpleVO.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupMemberSimpleVO.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupMemberSimpleVO();
-    const list0 = byteBuffer.readLongArray();
+    const list0 = buffer.readLongArray();
     packet.groupAuthIds = list0;
-    const result1 = byteBuffer.readLong();
+    const result1 = buffer.readLong();
     packet.groupId = result1;
-    const result2 = byteBuffer.readPacket(18014);
+    const result2 = buffer.readPacket(18014);
     packet.groupTime = result2;
-    const result3 = byteBuffer.readLong();
+    const result3 = buffer.readLong();
     packet.memberId = result3;
     return packet;
 };

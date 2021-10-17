@@ -9,19 +9,19 @@ RefreshGroupNameRequest.prototype.protocolId = function() {
     return 18206;
 };
 
-RefreshGroupNameRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+RefreshGroupNameRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
+    buffer.writeLong(packet.groupId);
 };
 
-RefreshGroupNameRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+RefreshGroupNameRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new RefreshGroupNameRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
     return packet;
 };

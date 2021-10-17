@@ -10,22 +10,22 @@ GroupMemberInfoRequest.prototype.protocolId = function() {
     return 18432;
 };
 
-GroupMemberInfoRequest.write = function(byteBuffer, packet) {
-    if (byteBuffer.writePacketFlag(packet)) {
+GroupMemberInfoRequest.write = function(buffer, packet) {
+    if (buffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeLong(packet.groupId);
-    byteBuffer.writeLongArray(packet.members);
+    buffer.writeLong(packet.groupId);
+    buffer.writeLongArray(packet.members);
 };
 
-GroupMemberInfoRequest.read = function(byteBuffer) {
-    if (!byteBuffer.readBoolean()) {
+GroupMemberInfoRequest.read = function(buffer) {
+    if (!buffer.readBoolean()) {
         return null;
     }
     const packet = new GroupMemberInfoRequest();
-    const result0 = byteBuffer.readLong();
+    const result0 = buffer.readLong();
     packet.groupId = result0;
-    const list1 = byteBuffer.readLongArray();
+    const list1 = buffer.readLongArray();
     packet.members = list1;
     return packet;
 };
