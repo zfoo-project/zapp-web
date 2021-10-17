@@ -9,11 +9,9 @@ ObjectB.prototype.protocolId = function() {
 };
 
 ObjectB.write = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeBoolean(packet.flag);
 };
 

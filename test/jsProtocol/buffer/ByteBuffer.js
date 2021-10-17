@@ -338,6 +338,22 @@ const ByteBuffer = function() {
         return result;
     };
 
+    this.writePacketFlag = function(value) {
+        const flag = value === null;
+        this.writeBoolean(!flag);
+        return flag;
+    };
+
+    this.writePacket = function(value, protocolId) {
+        const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+        protocolRegistration.write(this, value);
+    };
+
+    this.readPacket = function(protocolId) {
+        const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+        return protocolRegistration.read(this);
+    };
+
     this.writeBooleanArray = function(value) {
         if (value === null) {
             this.writeInt(0);
@@ -558,6 +574,312 @@ const ByteBuffer = function() {
             }
         }
         return array;
+    };
+
+    this.writeIntIntMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeInt(key);
+                this.writeInt(value);
+            });
+        }
+    };
+
+    this.readIntIntMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readInt();
+                const value = this.readInt();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeIntLongMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeInt(key);
+                this.writeLong(value);
+            });
+        }
+    };
+
+    this.readIntLongMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readInt();
+                const value = this.readLong();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeIntStringMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeInt(key);
+                this.writeString(value);
+            });
+        }
+    };
+
+    this.readIntStringMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readInt();
+                const value = this.readString();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeIntPacketMap = function(value, protocolId) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeInt(key);
+                protocolRegistration.write(this, value);
+            });
+        }
+    };
+
+    this.readIntPacketMap = function(protocolId) {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+            for (let index = 0; index < size; index++) {
+                const key = this.readInt();
+                const value = protocolRegistration.read(this);
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeLongIntMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeLong(key);
+                this.writeInt(value);
+            });
+        }
+    };
+
+    this.readLongIntMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readLong();
+                const value = this.readInt();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeLongLongMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeLong(key);
+                this.writeLong(value);
+            });
+        }
+    };
+
+    this.readLongLongMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readLong();
+                const value = this.readLong();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeLongStringMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeLong(key);
+                this.writeString(value);
+            });
+        }
+    };
+
+    this.readLongStringMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readLong();
+                const value = this.readString();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeLongPacketMap = function(value, protocolId) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeLong(key);
+                protocolRegistration.write(this, value);
+            });
+        }
+    };
+
+    this.readLongPacketMap = function(protocolId) {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+            for (let index = 0; index < size; index++) {
+                const key = this.readLong();
+                const value = protocolRegistration.read(this);
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeStringIntMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeString(key);
+                this.writeInt(value);
+            });
+        }
+    };
+
+    this.readStringIntMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readString();
+                const value = this.readInt();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeStringLongMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeString(key);
+                this.writeLong(value);
+            });
+        }
+    };
+
+    this.readStringLongMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readString();
+                const value = this.readLong();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeStringStringMap = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeString(key);
+                this.writeString(value);
+            });
+        }
+    };
+
+    this.readStringStringMap = function() {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+                const key = this.readString();
+                const value = this.readString();
+                map.set(key, value);
+            }
+        }
+        return map;
+    };
+
+    this.writeStringPacketMap = function(value, protocolId) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+            this.writeInt(value.size);
+            value.forEach((value, key) => {
+                this.writeString(key);
+                protocolRegistration.write(this, value);
+            });
+        }
+    };
+
+    this.readStringPacketMap = function(protocolId) {
+        const map = new Map();
+        const size = this.readInt();
+        if (size > 0) {
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
+            for (let index = 0; index < size; index++) {
+                const key = this.readString();
+                const value = protocolRegistration.read(this);
+                map.set(key, value);
+            }
+        }
+        return map;
     };
 };
 

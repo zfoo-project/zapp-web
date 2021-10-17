@@ -1,4 +1,3 @@
-import ProtocolManager from '../ProtocolManager.js';
 // @author jaysunxiao
 // @version 3.0
 const ObjectA = function(a, m, objectB) {
@@ -12,22 +11,12 @@ ObjectA.prototype.protocolId = function() {
 };
 
 ObjectA.write = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeInt(packet.a);
-    if (packet.m === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.m.size);
-        packet.m.forEach((value1, key0) => {
-            byteBuffer.writeInt(key0);
-            byteBuffer.writeString(value1);
-        });
-    }
-    ProtocolManager.getProtocol(103).write(byteBuffer, packet.objectB);
+    byteBuffer.writeIntStringMap(packet.m);
+    byteBuffer.writePacket(packet.objectB, 103);
 };
 
 ObjectA.read = function(byteBuffer) {
@@ -35,20 +24,12 @@ ObjectA.read = function(byteBuffer) {
         return null;
     }
     const packet = new ObjectA();
-    const result2 = byteBuffer.readInt();
-    packet.a = result2;
-    const result3 = new Map();
-    const size4 = byteBuffer.readInt();
-    if (size4 > 0) {
-        for (let index5 = 0; index5 < size4; index5++) {
-            const result6 = byteBuffer.readInt();
-            const result7 = byteBuffer.readString();
-            result3.set(result6, result7);
-        }
-    }
-    packet.m = result3;
-    const result8 = ProtocolManager.getProtocol(103).read(byteBuffer);
-    packet.objectB = result8;
+    const result0 = byteBuffer.readInt();
+    packet.a = result0;
+    const map1 = byteBuffer.readIntStringMap();
+    packet.m = map1;
+    const result2 = byteBuffer.readPacket(103);
+    packet.objectB = result2;
     return packet;
 };
 
