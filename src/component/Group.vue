@@ -34,7 +34,9 @@
                 <v-tab v-for="(group, index) in groups" :key="'tab' + index">
                     <v-badge v-show="getRedPointFromGroup(group)" dot color="error">
                         <v-avatar size="50">
-                            <v-img :src="toSimpleAvatarUrl(group.avatar)" />
+                            <!--TODO: 为了让测试环境也能看到头像，先用固定的图片-->
+                            <v-img :src="require(`@/asset/icon/default_avatar.gif`)" />
+                            <!--<v-img :src="toSimpleAvatarUrl(group.avatar)" />-->
                         </v-avatar>
                     </v-badge>
                     <v-avatar v-show="!getRedPointFromGroup(group)" size="50">
