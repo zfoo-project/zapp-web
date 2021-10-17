@@ -11,18 +11,16 @@ SaveChannelBoxRequest.prototype.protocolId = function() {
     return 18310;
 };
 
-SaveChannelBoxRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+SaveChannelBoxRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeString(packet.newChannelBoxName);
     byteBuffer.writeString(packet.oldChannelBoxName);
 };
 
-SaveChannelBoxRequest.readObject = function(byteBuffer) {
+SaveChannelBoxRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

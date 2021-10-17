@@ -13,17 +13,15 @@ RejectFriendRequest.prototype.protocolId = function() {
     return 15102;
 };
 
-RejectFriendRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+RejectFriendRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.friendId);
     byteBuffer.writeLong(packet.userId);
 };
 
-RejectFriendRequest.readObject = function(byteBuffer) {
+RejectFriendRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

@@ -12,19 +12,17 @@ MuteChannelResponse.prototype.protocolId = function() {
     return 1315;
 };
 
-MuteChannelResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+MuteChannelResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeBoolean(packet.mute);
     byteBuffer.writeLong(packet.refreshTime);
 };
 
-MuteChannelResponse.readObject = function(byteBuffer) {
+MuteChannelResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

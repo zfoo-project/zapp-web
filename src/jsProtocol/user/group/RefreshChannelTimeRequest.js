@@ -12,45 +12,29 @@ RefreshChannelTimeRequest.prototype.protocolId = function() {
     return 1310;
 };
 
-RefreshChannelTimeRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+RefreshChannelTimeRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.allChannelIds === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.allChannelIds.length);
-        packet.allChannelIds.forEach(element0 => {
-            byteBuffer.writeLong(element0);
-        });
-    }
+    byteBuffer.writeLongArray(packet.allChannelIds);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.refreshTime);
 };
 
-RefreshChannelTimeRequest.readObject = function(byteBuffer) {
+RefreshChannelTimeRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new RefreshChannelTimeRequest();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = byteBuffer.readLong();
-            result1.push(result4);
-        }
-    }
-    packet.allChannelIds = result1;
-    const result5 = byteBuffer.readLong();
-    packet.channelId = result5;
-    const result6 = byteBuffer.readLong();
-    packet.groupId = result6;
-    const result7 = byteBuffer.readLong();
-    packet.refreshTime = result7;
+    const list0 = byteBuffer.readLongArray();
+    packet.allChannelIds = list0;
+    const result1 = byteBuffer.readLong();
+    packet.channelId = result1;
+    const result2 = byteBuffer.readLong();
+    packet.groupId = result2;
+    const result3 = byteBuffer.readLong();
+    packet.refreshTime = result3;
     return packet;
 };
 

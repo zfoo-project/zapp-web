@@ -7,17 +7,15 @@ PairString.prototype.protocolId = function() {
     return 112;
 };
 
-PairString.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+PairString.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.key);
     byteBuffer.writeString(packet.value);
 };
 
-PairString.readObject = function(byteBuffer) {
+PairString.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

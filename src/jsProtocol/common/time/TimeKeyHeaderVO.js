@@ -10,17 +10,15 @@ TimeKeyHeaderVO.prototype.protocolId = function() {
     return 130;
 };
 
-TimeKeyHeaderVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+TimeKeyHeaderVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.text);
     byteBuffer.writeString(packet.value);
 };
 
-TimeKeyHeaderVO.readObject = function(byteBuffer) {
+TimeKeyHeaderVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

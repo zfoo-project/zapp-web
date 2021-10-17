@@ -1,4 +1,3 @@
-import ProtocolManager from '../../../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2020-08-05 12:35
@@ -13,39 +12,23 @@ GroupMemberVO.prototype.protocolId = function() {
     return 18401;
 };
 
-GroupMemberVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupMemberVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.groupAuthIds === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.groupAuthIds.length);
-        packet.groupAuthIds.forEach(element0 => {
-            byteBuffer.writeLong(element0);
-        });
-    }
-    ProtocolManager.getProtocol(3000).writeObject(byteBuffer, packet.userCache);
+    byteBuffer.writeLongArray(packet.groupAuthIds);
+    byteBuffer.writePacket(packet.userCache, 3000);
 };
 
-GroupMemberVO.readObject = function(byteBuffer) {
+GroupMemberVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new GroupMemberVO();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = byteBuffer.readLong();
-            result1.push(result4);
-        }
-    }
-    packet.groupAuthIds = result1;
-    const result5 = ProtocolManager.getProtocol(3000).readObject(byteBuffer);
-    packet.userCache = result5;
+    const list0 = byteBuffer.readLongArray();
+    packet.groupAuthIds = list0;
+    const result1 = byteBuffer.readPacket(3000);
+    packet.userCache = result1;
     return packet;
 };
 

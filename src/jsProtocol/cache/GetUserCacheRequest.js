@@ -9,36 +9,20 @@ GetUserCacheRequest.prototype.protocolId = function() {
     return 3021;
 };
 
-GetUserCacheRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GetUserCacheRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.userIds === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.userIds.size);
-        packet.userIds.forEach(element0 => {
-            byteBuffer.writeLong(element0);
-        });
-    }
+    byteBuffer.writeLongArray(packet.userIds);
 };
 
-GetUserCacheRequest.readObject = function(byteBuffer) {
+GetUserCacheRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new GetUserCacheRequest();
-    const result1 = new Set();
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = byteBuffer.readLong();
-            result1.add(result4);
-        }
-    }
-    packet.userIds = result1;
+    const set0 = byteBuffer.readLongArray();
+    packet.userIds = set0;
     return packet;
 };
 

@@ -12,19 +12,17 @@ EditFriendMessageNotice.prototype.protocolId = function() {
     return 16004;
 };
 
-EditFriendMessageNotice.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+EditFriendMessageNotice.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.chatMessage);
     byteBuffer.writeLong(packet.messageId);
     byteBuffer.writeLong(packet.uidA);
     byteBuffer.writeLong(packet.uidB);
 };
 
-EditFriendMessageNotice.readObject = function(byteBuffer) {
+EditFriendMessageNotice.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

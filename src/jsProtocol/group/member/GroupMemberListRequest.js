@@ -10,17 +10,15 @@ GroupMemberListRequest.prototype.protocolId = function() {
     return 18430;
 };
 
-GroupMemberListRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupMemberListRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeInt(packet.page);
 };
 
-GroupMemberListRequest.readObject = function(byteBuffer) {
+GroupMemberListRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

@@ -10,17 +10,15 @@ SaveGroupSettingResponse.prototype.protocolId = function() {
     return 18205;
 };
 
-SaveGroupSettingResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+SaveGroupSettingResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeString(packet.name);
 };
 
-SaveGroupSettingResponse.readObject = function(byteBuffer) {
+SaveGroupSettingResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

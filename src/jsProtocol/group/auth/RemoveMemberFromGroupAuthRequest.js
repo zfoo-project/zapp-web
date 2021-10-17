@@ -11,18 +11,16 @@ RemoveMemberFromGroupAuthRequest.prototype.protocolId = function() {
     return 18522;
 };
 
-RemoveMemberFromGroupAuthRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+RemoveMemberFromGroupAuthRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupAuthId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.memberId);
 };
 
-RemoveMemberFromGroupAuthRequest.readObject = function(byteBuffer) {
+RemoveMemberFromGroupAuthRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

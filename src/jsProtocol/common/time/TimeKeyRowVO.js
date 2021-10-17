@@ -60,12 +60,10 @@ TimeKeyRowVO.prototype.protocolId = function() {
     return 131;
 };
 
-TimeKeyRowVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+TimeKeyRowVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.a);
     byteBuffer.writeString(packet.aa);
     byteBuffer.writeString(packet.ab);
@@ -120,7 +118,7 @@ TimeKeyRowVO.writeObject = function(byteBuffer, packet) {
     byteBuffer.writeString(packet.z);
 };
 
-TimeKeyRowVO.readObject = function(byteBuffer) {
+TimeKeyRowVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

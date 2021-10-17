@@ -13,12 +13,10 @@ InviteCodeVO.prototype.protocolId = function() {
     return 18400;
 };
 
-InviteCodeVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+InviteCodeVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.code);
     byteBuffer.writeInt(packet.count);
     byteBuffer.writeInt(packet.countType);
@@ -26,7 +24,7 @@ InviteCodeVO.writeObject = function(byteBuffer, packet) {
     byteBuffer.writeInt(packet.expireType);
 };
 
-InviteCodeVO.readObject = function(byteBuffer) {
+InviteCodeVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

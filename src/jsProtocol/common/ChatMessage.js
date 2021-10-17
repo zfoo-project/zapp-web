@@ -19,12 +19,10 @@ ChatMessage.prototype.protocolId = function() {
     return 120;
 };
 
-ChatMessage.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+ChatMessage.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.avatar);
     byteBuffer.writeLong(packet.id);
     byteBuffer.writeString(packet.message);
@@ -35,7 +33,7 @@ ChatMessage.writeObject = function(byteBuffer, packet) {
     byteBuffer.writeByte(packet.type);
 };
 
-ChatMessage.readObject = function(byteBuffer) {
+ChatMessage.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

@@ -1,4 +1,3 @@
-import ProtocolManager from '../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2020-04-04 21:44
@@ -10,36 +9,20 @@ SearchUserResponse.prototype.protocolId = function() {
     return 3031;
 };
 
-SearchUserResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+SearchUserResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.userCaches === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.userCaches.length);
-        packet.userCaches.forEach(element0 => {
-            ProtocolManager.getProtocol(3000).writeObject(byteBuffer, element0);
-        });
-    }
+    byteBuffer.writePacketArray(packet.userCaches, 3000);
 };
 
-SearchUserResponse.readObject = function(byteBuffer) {
+SearchUserResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new SearchUserResponse();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = ProtocolManager.getProtocol(3000).readObject(byteBuffer);
-            result1.push(result4);
-        }
-    }
-    packet.userCaches = result1;
+    const list0 = byteBuffer.readPacketArray(3000);
+    packet.userCaches = list0;
     return packet;
 };
 

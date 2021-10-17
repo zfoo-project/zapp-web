@@ -1,4 +1,3 @@
-import ProtocolManager from '../../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2019-11-08 11:00
@@ -26,12 +25,10 @@ UserCache.prototype.protocolId = function() {
     return 3000;
 };
 
-UserCache.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+UserCache.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.avatar);
     byteBuffer.writeString(packet.background);
     byteBuffer.writeLong(packet.coin);
@@ -42,96 +39,54 @@ UserCache.writeObject = function(byteBuffer, packet) {
     byteBuffer.writeLong(packet.free);
     byteBuffer.writeInt(packet.gender);
     byteBuffer.writeLong(packet.id);
-    if (packet.items === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.items.length);
-        packet.items.forEach(element0 => {
-            ProtocolManager.getProtocol(113).writeObject(byteBuffer, element0);
-        });
-    }
-    if (packet.locations === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.locations.length);
-        packet.locations.forEach(element1 => {
-            ProtocolManager.getProtocol(113).writeObject(byteBuffer, element1);
-        });
-    }
+    byteBuffer.writePacketArray(packet.items, 113);
+    byteBuffer.writePacketArray(packet.locations, 113);
     byteBuffer.writeString(packet.name);
     byteBuffer.writeLong(packet.normal);
-    if (packet.persons === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.persons.length);
-        packet.persons.forEach(element2 => {
-            ProtocolManager.getProtocol(113).writeObject(byteBuffer, element2);
-        });
-    }
+    byteBuffer.writePacketArray(packet.persons, 113);
     byteBuffer.writeString(packet.signature);
     byteBuffer.writeInt(packet.starNum);
 };
 
-UserCache.readObject = function(byteBuffer) {
+UserCache.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new UserCache();
+    const result0 = byteBuffer.readString();
+    packet.avatar = result0;
+    const result1 = byteBuffer.readString();
+    packet.background = result1;
+    const result2 = byteBuffer.readLong();
+    packet.coin = result2;
     const result3 = byteBuffer.readString();
-    packet.avatar = result3;
-    const result4 = byteBuffer.readString();
-    packet.background = result4;
-    const result5 = byteBuffer.readLong();
-    packet.coin = result5;
-    const result6 = byteBuffer.readString();
-    packet.custom = result6;
+    packet.custom = result3;
+    const result4 = byteBuffer.readLong();
+    packet.customTime = result4;
+    const result5 = byteBuffer.readInt();
+    packet.fanNum = result5;
+    const result6 = byteBuffer.readInt();
+    packet.followNum = result6;
     const result7 = byteBuffer.readLong();
-    packet.customTime = result7;
+    packet.free = result7;
     const result8 = byteBuffer.readInt();
-    packet.fanNum = result8;
-    const result9 = byteBuffer.readInt();
-    packet.followNum = result9;
-    const result10 = byteBuffer.readLong();
-    packet.free = result10;
-    const result11 = byteBuffer.readInt();
-    packet.gender = result11;
-    const result12 = byteBuffer.readLong();
-    packet.id = result12;
-    const result13 = [];
-    const size14 = byteBuffer.readInt();
-    if (size14 > 0) {
-        for (let index15 = 0; index15 < size14; index15++) {
-            const result16 = ProtocolManager.getProtocol(113).readObject(byteBuffer);
-            result13.push(result16);
-        }
-    }
-    packet.items = result13;
-    const result17 = [];
-    const size18 = byteBuffer.readInt();
-    if (size18 > 0) {
-        for (let index19 = 0; index19 < size18; index19++) {
-            const result20 = ProtocolManager.getProtocol(113).readObject(byteBuffer);
-            result17.push(result20);
-        }
-    }
-    packet.locations = result17;
-    const result21 = byteBuffer.readString();
-    packet.name = result21;
-    const result22 = byteBuffer.readLong();
-    packet.normal = result22;
-    const result23 = [];
-    const size24 = byteBuffer.readInt();
-    if (size24 > 0) {
-        for (let index25 = 0; index25 < size24; index25++) {
-            const result26 = ProtocolManager.getProtocol(113).readObject(byteBuffer);
-            result23.push(result26);
-        }
-    }
-    packet.persons = result23;
-    const result27 = byteBuffer.readString();
-    packet.signature = result27;
-    const result28 = byteBuffer.readInt();
-    packet.starNum = result28;
+    packet.gender = result8;
+    const result9 = byteBuffer.readLong();
+    packet.id = result9;
+    const list10 = byteBuffer.readPacketArray(113);
+    packet.items = list10;
+    const list11 = byteBuffer.readPacketArray(113);
+    packet.locations = list11;
+    const result12 = byteBuffer.readString();
+    packet.name = result12;
+    const result13 = byteBuffer.readLong();
+    packet.normal = result13;
+    const list14 = byteBuffer.readPacketArray(113);
+    packet.persons = list14;
+    const result15 = byteBuffer.readString();
+    packet.signature = result15;
+    const result16 = byteBuffer.readInt();
+    packet.starNum = result16;
     return packet;
 };
 

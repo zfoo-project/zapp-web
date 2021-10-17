@@ -13,18 +13,16 @@ DeleteGroupMessageNotice.prototype.protocolId = function() {
     return 19004;
 };
 
-DeleteGroupMessageNotice.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+DeleteGroupMessageNotice.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.messageId);
 };
 
-DeleteGroupMessageNotice.readObject = function(byteBuffer) {
+DeleteGroupMessageNotice.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

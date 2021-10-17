@@ -8,18 +8,16 @@ TripleLSS.prototype.protocolId = function() {
     return 116;
 };
 
-TripleLSS.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+TripleLSS.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.left);
     byteBuffer.writeString(packet.middle);
     byteBuffer.writeString(packet.right);
 };
 
-TripleLSS.readObject = function(byteBuffer) {
+TripleLSS.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

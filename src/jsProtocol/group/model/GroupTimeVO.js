@@ -1,4 +1,3 @@
-import ProtocolManager from '../../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2020-04-22 10:23
@@ -12,42 +11,26 @@ GroupTimeVO.prototype.protocolId = function() {
     return 18014;
 };
 
-GroupTimeVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupTimeVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.channelTimes === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.channelTimes.length);
-        packet.channelTimes.forEach(element0 => {
-            ProtocolManager.getProtocol(18015).writeObject(byteBuffer, element0);
-        });
-    }
+    byteBuffer.writePacketArray(packet.channelTimes, 18015);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeBoolean(packet.mute);
 };
 
-GroupTimeVO.readObject = function(byteBuffer) {
+GroupTimeVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new GroupTimeVO();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = ProtocolManager.getProtocol(18015).readObject(byteBuffer);
-            result1.push(result4);
-        }
-    }
-    packet.channelTimes = result1;
-    const result5 = byteBuffer.readLong();
-    packet.groupId = result5;
-    const result6 = byteBuffer.readBoolean(); 
-    packet.mute = result6;
+    const list0 = byteBuffer.readPacketArray(18015);
+    packet.channelTimes = list0;
+    const result1 = byteBuffer.readLong();
+    packet.groupId = result1;
+    const result2 = byteBuffer.readBoolean(); 
+    packet.mute = result2;
     return packet;
 };
 

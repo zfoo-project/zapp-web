@@ -10,17 +10,15 @@ LeaveGroupResponse.prototype.protocolId = function() {
     return 18423;
 };
 
-LeaveGroupResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+LeaveGroupResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeString(packet.groupName);
 };
 
-LeaveGroupResponse.readObject = function(byteBuffer) {
+LeaveGroupResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

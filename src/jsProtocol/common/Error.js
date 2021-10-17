@@ -8,18 +8,16 @@ Error.prototype.protocolId = function() {
     return 101;
 };
 
-Error.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+Error.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeInt(packet.errorCode);
     byteBuffer.writeString(packet.errorMessage);
     byteBuffer.writeInt(packet.module);
 };
 
-Error.readObject = function(byteBuffer) {
+Error.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

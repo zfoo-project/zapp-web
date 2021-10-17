@@ -9,16 +9,14 @@ LeaveGroupRequest.prototype.protocolId = function() {
     return 18422;
 };
 
-LeaveGroupRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+LeaveGroupRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
 };
 
-LeaveGroupRequest.readObject = function(byteBuffer) {
+LeaveGroupRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

@@ -5,15 +5,13 @@ Ping.prototype.protocolId = function() {
     return 103;
 };
 
-Ping.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+Ping.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
 };
 
-Ping.readObject = function(byteBuffer) {
+Ping.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

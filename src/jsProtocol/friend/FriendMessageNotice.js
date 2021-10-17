@@ -1,4 +1,3 @@
-import ProtocolManager from '../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2020-04-11 11:49
@@ -12,23 +11,21 @@ FriendMessageNotice.prototype.protocolId = function() {
     return 16000;
 };
 
-FriendMessageNotice.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+FriendMessageNotice.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    ProtocolManager.getProtocol(120).writeObject(byteBuffer, packet.chatMessage);
+    byteBuffer.writePacket(packet.chatMessage, 120);
     byteBuffer.writeLong(packet.uidA);
     byteBuffer.writeLong(packet.uidB);
 };
 
-FriendMessageNotice.readObject = function(byteBuffer) {
+FriendMessageNotice.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new FriendMessageNotice();
-    const result0 = ProtocolManager.getProtocol(120).readObject(byteBuffer);
+    const result0 = byteBuffer.readPacket(120);
     packet.chatMessage = result0;
     const result1 = byteBuffer.readLong();
     packet.uidA = result1;

@@ -8,18 +8,16 @@ TripleString.prototype.protocolId = function() {
     return 115;
 };
 
-TripleString.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+TripleString.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.left);
     byteBuffer.writeString(packet.middle);
     byteBuffer.writeString(packet.right);
 };
 
-TripleString.readObject = function(byteBuffer) {
+TripleString.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

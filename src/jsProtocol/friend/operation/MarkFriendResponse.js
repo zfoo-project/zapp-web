@@ -11,17 +11,15 @@ MarkFriendResponse.prototype.protocolId = function() {
     return 15113;
 };
 
-MarkFriendResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+MarkFriendResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.friendId);
     byteBuffer.writeString(packet.tag);
 };
 
-MarkFriendResponse.readObject = function(byteBuffer) {
+MarkFriendResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

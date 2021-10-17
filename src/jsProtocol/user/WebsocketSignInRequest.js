@@ -9,16 +9,14 @@ WebsocketSignInRequest.prototype.protocolId = function() {
     return 1000;
 };
 
-WebsocketSignInRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+WebsocketSignInRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.token);
 };
 
-WebsocketSignInRequest.readObject = function(byteBuffer) {
+WebsocketSignInRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

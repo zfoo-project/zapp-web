@@ -13,18 +13,16 @@ ReadFriendMessageResponse.prototype.protocolId = function() {
     return 15203;
 };
 
-ReadFriendMessageResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+ReadFriendMessageResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.friendId);
     byteBuffer.writeLong(packet.readTime);
     byteBuffer.writeLong(packet.refreshTime);
 };
 
-ReadFriendMessageResponse.readObject = function(byteBuffer) {
+ReadFriendMessageResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

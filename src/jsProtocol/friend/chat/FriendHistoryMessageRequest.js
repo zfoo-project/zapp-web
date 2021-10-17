@@ -14,18 +14,16 @@ FriendHistoryMessageRequest.prototype.protocolId = function() {
     return 15204;
 };
 
-FriendHistoryMessageRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+FriendHistoryMessageRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.friendId);
     byteBuffer.writeLong(packet.lastMessageId);
     byteBuffer.writeLong(packet.userId);
 };
 
-FriendHistoryMessageRequest.readObject = function(byteBuffer) {
+FriendHistoryMessageRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

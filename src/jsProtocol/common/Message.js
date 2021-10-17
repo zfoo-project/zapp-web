@@ -8,18 +8,16 @@ Message.prototype.protocolId = function() {
     return 100;
 };
 
-Message.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+Message.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeInt(packet.code);
     byteBuffer.writeString(packet.message);
     byteBuffer.writeByte(packet.module);
 };
 
-Message.readObject = function(byteBuffer) {
+Message.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

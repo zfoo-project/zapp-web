@@ -14,19 +14,17 @@ EditGroupMessageNotice.prototype.protocolId = function() {
     return 19005;
 };
 
-EditGroupMessageNotice.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+EditGroupMessageNotice.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeString(packet.chatMessage);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.messageId);
 };
 
-EditGroupMessageNotice.readObject = function(byteBuffer) {
+EditGroupMessageNotice.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

@@ -1,4 +1,3 @@
-import ProtocolManager from '../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2020-05-07 10:49
@@ -12,25 +11,23 @@ GroupChatMessageNotice.prototype.protocolId = function() {
     return 19006;
 };
 
-GroupChatMessageNotice.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupChatMessageNotice.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
-    ProtocolManager.getProtocol(120).writeObject(byteBuffer, packet.chatMessage);
+    byteBuffer.writePacket(packet.chatMessage, 120);
     byteBuffer.writeLong(packet.groupId);
 };
 
-GroupChatMessageNotice.readObject = function(byteBuffer) {
+GroupChatMessageNotice.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new GroupChatMessageNotice();
     const result0 = byteBuffer.readLong();
     packet.channelId = result0;
-    const result1 = ProtocolManager.getProtocol(120).readObject(byteBuffer);
+    const result1 = byteBuffer.readPacket(120);
     packet.chatMessage = result1;
     const result2 = byteBuffer.readLong();
     packet.groupId = result2;

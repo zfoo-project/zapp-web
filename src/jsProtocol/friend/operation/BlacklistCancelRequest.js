@@ -12,17 +12,15 @@ BlacklistCancelRequest.prototype.protocolId = function() {
     return 15110;
 };
 
-BlacklistCancelRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+BlacklistCancelRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.targetId);
     byteBuffer.writeLong(packet.userId);
 };
 
-BlacklistCancelRequest.readObject = function(byteBuffer) {
+BlacklistCancelRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

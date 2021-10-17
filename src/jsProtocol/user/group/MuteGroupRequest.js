@@ -10,17 +10,15 @@ MuteGroupRequest.prototype.protocolId = function() {
     return 1312;
 };
 
-MuteGroupRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+MuteGroupRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeBoolean(packet.mute);
 };
 
-MuteGroupRequest.readObject = function(byteBuffer) {
+MuteGroupRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

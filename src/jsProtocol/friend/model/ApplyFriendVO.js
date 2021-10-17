@@ -1,4 +1,3 @@
-import ProtocolManager from '../../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2019-12-11 10:05
@@ -13,24 +12,22 @@ ApplyFriendVO.prototype.protocolId = function() {
     return 15000;
 };
 
-ApplyFriendVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+ApplyFriendVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    ProtocolManager.getProtocol(3000).writeObject(byteBuffer, packet.friendCache);
+    byteBuffer.writePacket(packet.friendCache, 3000);
     byteBuffer.writeLong(packet.friendId);
     byteBuffer.writeInt(packet.status);
     byteBuffer.writeLong(packet.timestamp);
 };
 
-ApplyFriendVO.readObject = function(byteBuffer) {
+ApplyFriendVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new ApplyFriendVO();
-    const result0 = ProtocolManager.getProtocol(3000).readObject(byteBuffer);
+    const result0 = byteBuffer.readPacket(3000);
     packet.friendCache = result0;
     const result1 = byteBuffer.readLong();
     packet.friendId = result1;

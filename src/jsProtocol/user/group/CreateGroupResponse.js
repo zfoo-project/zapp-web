@@ -1,4 +1,3 @@
-import ProtocolManager from '../../ProtocolManager.js';
 // 创建群组
 //
 // @author jaysunxiao
@@ -12,21 +11,19 @@ CreateGroupResponse.prototype.protocolId = function() {
     return 1301;
 };
 
-CreateGroupResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+CreateGroupResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    ProtocolManager.getProtocol(18000).writeObject(byteBuffer, packet.group);
+    byteBuffer.writePacket(packet.group, 18000);
 };
 
-CreateGroupResponse.readObject = function(byteBuffer) {
+CreateGroupResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new CreateGroupResponse();
-    const result0 = ProtocolManager.getProtocol(18000).readObject(byteBuffer);
+    const result0 = byteBuffer.readPacket(18000);
     packet.group = result0;
     return packet;
 };

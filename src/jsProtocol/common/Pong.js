@@ -6,16 +6,14 @@ Pong.prototype.protocolId = function() {
     return 104;
 };
 
-Pong.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+Pong.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.time);
 };
 
-Pong.readObject = function(byteBuffer) {
+Pong.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

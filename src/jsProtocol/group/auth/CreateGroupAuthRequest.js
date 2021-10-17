@@ -11,17 +11,15 @@ CreateGroupAuthRequest.prototype.protocolId = function() {
     return 18500;
 };
 
-CreateGroupAuthRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+CreateGroupAuthRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeString(packet.name);
 };
 
-CreateGroupAuthRequest.readObject = function(byteBuffer) {
+CreateGroupAuthRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

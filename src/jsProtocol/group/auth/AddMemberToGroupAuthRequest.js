@@ -11,18 +11,16 @@ AddMemberToGroupAuthRequest.prototype.protocolId = function() {
     return 18520;
 };
 
-AddMemberToGroupAuthRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+AddMemberToGroupAuthRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupAuthId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.memberId);
 };
 
-AddMemberToGroupAuthRequest.readObject = function(byteBuffer) {
+AddMemberToGroupAuthRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

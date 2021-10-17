@@ -10,17 +10,15 @@ DeleteChannelBoxRequest.prototype.protocolId = function() {
     return 18304;
 };
 
-DeleteChannelBoxRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+DeleteChannelBoxRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.channelBoxName);
     byteBuffer.writeLong(packet.groupId);
 };
 
-DeleteChannelBoxRequest.readObject = function(byteBuffer) {
+DeleteChannelBoxRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

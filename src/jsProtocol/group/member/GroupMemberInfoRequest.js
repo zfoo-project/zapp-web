@@ -10,39 +10,23 @@ GroupMemberInfoRequest.prototype.protocolId = function() {
     return 18432;
 };
 
-GroupMemberInfoRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupMemberInfoRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
-    if (packet.members === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.members.length);
-        packet.members.forEach(element0 => {
-            byteBuffer.writeLong(element0);
-        });
-    }
+    byteBuffer.writeLongArray(packet.members);
 };
 
-GroupMemberInfoRequest.readObject = function(byteBuffer) {
+GroupMemberInfoRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new GroupMemberInfoRequest();
-    const result1 = byteBuffer.readLong();
-    packet.groupId = result1;
-    const result2 = [];
-    const size3 = byteBuffer.readInt();
-    if (size3 > 0) {
-        for (let index4 = 0; index4 < size3; index4++) {
-            const result5 = byteBuffer.readLong();
-            result2.push(result5);
-        }
-    }
-    packet.members = result2;
+    const result0 = byteBuffer.readLong();
+    packet.groupId = result0;
+    const list1 = byteBuffer.readLongArray();
+    packet.members = list1;
     return packet;
 };
 

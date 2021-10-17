@@ -10,17 +10,15 @@ KickMemberRequest.prototype.protocolId = function() {
     return 18434;
 };
 
-KickMemberRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+KickMemberRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.memberId);
 };
 
-KickMemberRequest.readObject = function(byteBuffer) {
+KickMemberRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

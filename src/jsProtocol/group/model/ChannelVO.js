@@ -1,4 +1,3 @@
-import ProtocolManager from '../../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2020-04-22 11:43
@@ -13,45 +12,29 @@ ChannelVO.prototype.protocolId = function() {
     return 18010;
 };
 
-ChannelVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+ChannelVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.channelAuths === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.channelAuths.length);
-        packet.channelAuths.forEach(element0 => {
-            ProtocolManager.getProtocol(18012).writeObject(byteBuffer, element0);
-        });
-    }
+    byteBuffer.writePacketArray(packet.channelAuths, 18012);
     byteBuffer.writeLong(packet.id);
     byteBuffer.writeString(packet.name);
     byteBuffer.writeLong(packet.refreshTime);
 };
 
-ChannelVO.readObject = function(byteBuffer) {
+ChannelVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new ChannelVO();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = ProtocolManager.getProtocol(18012).readObject(byteBuffer);
-            result1.push(result4);
-        }
-    }
-    packet.channelAuths = result1;
-    const result5 = byteBuffer.readLong();
-    packet.id = result5;
-    const result6 = byteBuffer.readString();
-    packet.name = result6;
-    const result7 = byteBuffer.readLong();
-    packet.refreshTime = result7;
+    const list0 = byteBuffer.readPacketArray(18012);
+    packet.channelAuths = list0;
+    const result1 = byteBuffer.readLong();
+    packet.id = result1;
+    const result2 = byteBuffer.readString();
+    packet.name = result2;
+    const result3 = byteBuffer.readLong();
+    packet.refreshTime = result3;
     return packet;
 };
 

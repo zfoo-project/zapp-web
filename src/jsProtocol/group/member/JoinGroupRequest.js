@@ -9,16 +9,14 @@ JoinGroupRequest.prototype.protocolId = function() {
     return 18412;
 };
 
-JoinGroupRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+JoinGroupRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.inviteCode);
 };
 
-JoinGroupRequest.readObject = function(byteBuffer) {
+JoinGroupRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

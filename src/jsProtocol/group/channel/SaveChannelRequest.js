@@ -11,18 +11,16 @@ SaveChannelRequest.prototype.protocolId = function() {
     return 18308;
 };
 
-SaveChannelRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+SaveChannelRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeString(packet.channelName);
     byteBuffer.writeLong(packet.groupId);
 };
 
-SaveChannelRequest.readObject = function(byteBuffer) {
+SaveChannelRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

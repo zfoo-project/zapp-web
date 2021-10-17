@@ -1,4 +1,3 @@
-import ProtocolManager from '../../ProtocolManager.js';
 // 好友聊天
 //
 // @author jaysunxiao
@@ -14,42 +13,26 @@ FriendHistoryMessageResponse.prototype.protocolId = function() {
     return 15205;
 };
 
-FriendHistoryMessageResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+FriendHistoryMessageResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.chatMessages === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.chatMessages.length);
-        packet.chatMessages.forEach(element0 => {
-            ProtocolManager.getProtocol(120).writeObject(byteBuffer, element0);
-        });
-    }
+    byteBuffer.writePacketArray(packet.chatMessages, 120);
     byteBuffer.writeLong(packet.uidA);
     byteBuffer.writeLong(packet.uidB);
 };
 
-FriendHistoryMessageResponse.readObject = function(byteBuffer) {
+FriendHistoryMessageResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new FriendHistoryMessageResponse();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = ProtocolManager.getProtocol(120).readObject(byteBuffer);
-            result1.push(result4);
-        }
-    }
-    packet.chatMessages = result1;
-    const result5 = byteBuffer.readLong();
-    packet.uidA = result5;
-    const result6 = byteBuffer.readLong();
-    packet.uidB = result6;
+    const list0 = byteBuffer.readPacketArray(120);
+    packet.chatMessages = list0;
+    const result1 = byteBuffer.readLong();
+    packet.uidA = result1;
+    const result2 = byteBuffer.readLong();
+    packet.uidB = result2;
     return packet;
 };
 

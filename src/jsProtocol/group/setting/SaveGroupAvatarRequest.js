@@ -10,17 +10,15 @@ SaveGroupAvatarRequest.prototype.protocolId = function() {
     return 18200;
 };
 
-SaveGroupAvatarRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+SaveGroupAvatarRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.avatar);
     byteBuffer.writeLong(packet.groupId);
 };
 
-SaveGroupAvatarRequest.readObject = function(byteBuffer) {
+SaveGroupAvatarRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

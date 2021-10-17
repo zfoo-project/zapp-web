@@ -13,18 +13,16 @@ DeleteGroupPinMessageResponse.prototype.protocolId = function() {
     return 18111;
 };
 
-DeleteGroupPinMessageResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+DeleteGroupPinMessageResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.messageId);
 };
 
-DeleteGroupPinMessageResponse.readObject = function(byteBuffer) {
+DeleteGroupPinMessageResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

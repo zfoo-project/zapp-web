@@ -11,42 +11,26 @@ MemberGroupAuthIdUpdateNotice.prototype.protocolId = function() {
     return 19002;
 };
 
-MemberGroupAuthIdUpdateNotice.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+MemberGroupAuthIdUpdateNotice.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.groupAuthIds === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.groupAuthIds.length);
-        packet.groupAuthIds.forEach(element0 => {
-            byteBuffer.writeLong(element0);
-        });
-    }
+    byteBuffer.writeLongArray(packet.groupAuthIds);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.memberId);
 };
 
-MemberGroupAuthIdUpdateNotice.readObject = function(byteBuffer) {
+MemberGroupAuthIdUpdateNotice.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new MemberGroupAuthIdUpdateNotice();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = byteBuffer.readLong();
-            result1.push(result4);
-        }
-    }
-    packet.groupAuthIds = result1;
-    const result5 = byteBuffer.readLong();
-    packet.groupId = result5;
-    const result6 = byteBuffer.readLong();
-    packet.memberId = result6;
+    const list0 = byteBuffer.readLongArray();
+    packet.groupAuthIds = list0;
+    const result1 = byteBuffer.readLong();
+    packet.groupId = result1;
+    const result2 = byteBuffer.readLong();
+    packet.memberId = result2;
     return packet;
 };
 

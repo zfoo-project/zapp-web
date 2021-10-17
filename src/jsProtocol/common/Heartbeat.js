@@ -5,15 +5,13 @@ Heartbeat.prototype.protocolId = function() {
     return 102;
 };
 
-Heartbeat.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+Heartbeat.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
 };
 
-Heartbeat.readObject = function(byteBuffer) {
+Heartbeat.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

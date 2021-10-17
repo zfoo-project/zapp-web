@@ -14,19 +14,17 @@ FriendChatRequest.prototype.protocolId = function() {
     return 15200;
 };
 
-FriendChatRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+FriendChatRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.chatMessage);
     byteBuffer.writeLong(packet.friendId);
     byteBuffer.writeByte(packet.type);
     byteBuffer.writeLong(packet.userId);
 };
 
-FriendChatRequest.readObject = function(byteBuffer) {
+FriendChatRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

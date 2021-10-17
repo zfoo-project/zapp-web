@@ -11,18 +11,16 @@ RefreshChannelTimeResponse.prototype.protocolId = function() {
     return 1311;
 };
 
-RefreshChannelTimeResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+RefreshChannelTimeResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.refreshTime);
 };
 
-RefreshChannelTimeResponse.readObject = function(byteBuffer) {
+RefreshChannelTimeResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

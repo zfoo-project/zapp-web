@@ -14,18 +14,16 @@ GroupHistoryPinMessageRequest.prototype.protocolId = function() {
     return 18112;
 };
 
-GroupHistoryPinMessageRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupHistoryPinMessageRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeLong(packet.lastMessageId);
 };
 
-GroupHistoryPinMessageRequest.readObject = function(byteBuffer) {
+GroupHistoryPinMessageRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

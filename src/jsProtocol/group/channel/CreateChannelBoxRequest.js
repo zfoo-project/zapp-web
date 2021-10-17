@@ -10,17 +10,15 @@ CreateChannelBoxRequest.prototype.protocolId = function() {
     return 18300;
 };
 
-CreateChannelBoxRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+CreateChannelBoxRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.channelBoxName);
     byteBuffer.writeLong(packet.groupId);
 };
 
-CreateChannelBoxRequest.readObject = function(byteBuffer) {
+CreateChannelBoxRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

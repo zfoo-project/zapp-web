@@ -11,18 +11,16 @@ DeleteFriendMessageRequest.prototype.protocolId = function() {
     return 15206;
 };
 
-DeleteFriendMessageRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+DeleteFriendMessageRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.friendId);
     byteBuffer.writeLong(packet.messageId);
     byteBuffer.writeLong(packet.userId);
 };
 
-DeleteFriendMessageRequest.readObject = function(byteBuffer) {
+DeleteFriendMessageRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

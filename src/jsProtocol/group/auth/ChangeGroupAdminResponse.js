@@ -10,17 +10,15 @@ ChangeGroupAdminResponse.prototype.protocolId = function() {
     return 18536;
 };
 
-ChangeGroupAdminResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+ChangeGroupAdminResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.adminId);
     byteBuffer.writeLong(packet.groupId);
 };
 
-ChangeGroupAdminResponse.readObject = function(byteBuffer) {
+ChangeGroupAdminResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

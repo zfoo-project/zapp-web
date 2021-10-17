@@ -15,19 +15,17 @@ GroupAuthVO.prototype.protocolId = function() {
     return 18001;
 };
 
-GroupAuthVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupAuthVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.color);
     byteBuffer.writeInt(packet.groupAuth);
     byteBuffer.writeLong(packet.id);
     byteBuffer.writeString(packet.name);
 };
 
-GroupAuthVO.readObject = function(byteBuffer) {
+GroupAuthVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

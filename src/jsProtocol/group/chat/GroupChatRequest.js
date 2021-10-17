@@ -14,19 +14,17 @@ GroupChatRequest.prototype.protocolId = function() {
     return 18100;
 };
 
-GroupChatRequest.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupChatRequest.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeString(packet.chatMessage);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeByte(packet.type);
 };
 
-GroupChatRequest.readObject = function(byteBuffer) {
+GroupChatRequest.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

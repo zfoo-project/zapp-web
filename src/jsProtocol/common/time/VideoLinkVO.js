@@ -10,17 +10,15 @@ VideoLinkVO.prototype.protocolId = function() {
     return 134;
 };
 
-VideoLinkVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+VideoLinkVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeString(packet.poster);
     byteBuffer.writeString(packet.url);
 };
 
-VideoLinkVO.readObject = function(byteBuffer) {
+VideoLinkVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

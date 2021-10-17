@@ -8,15 +8,13 @@ SaveChannelAuthResponse.prototype.protocolId = function() {
     return 18513;
 };
 
-SaveChannelAuthResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+SaveChannelAuthResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
 };
 
-SaveChannelAuthResponse.readObject = function(byteBuffer) {
+SaveChannelAuthResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

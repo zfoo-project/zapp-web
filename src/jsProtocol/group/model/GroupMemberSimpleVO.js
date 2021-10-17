@@ -1,4 +1,3 @@
-import ProtocolManager from '../../ProtocolManager.js';
 // @author jaysunxiao
 // @version 1.0
 // @since 2020-05-04 19:59
@@ -13,45 +12,29 @@ GroupMemberSimpleVO.prototype.protocolId = function() {
     return 18013;
 };
 
-GroupMemberSimpleVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+GroupMemberSimpleVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
-    if (packet.groupAuthIds === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.groupAuthIds.length);
-        packet.groupAuthIds.forEach(element0 => {
-            byteBuffer.writeLong(element0);
-        });
-    }
+    byteBuffer.writeLongArray(packet.groupAuthIds);
     byteBuffer.writeLong(packet.groupId);
-    ProtocolManager.getProtocol(18014).writeObject(byteBuffer, packet.groupTime);
+    byteBuffer.writePacket(packet.groupTime, 18014);
     byteBuffer.writeLong(packet.memberId);
 };
 
-GroupMemberSimpleVO.readObject = function(byteBuffer) {
+GroupMemberSimpleVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new GroupMemberSimpleVO();
-    const result1 = [];
-    const size2 = byteBuffer.readInt();
-    if (size2 > 0) {
-        for (let index3 = 0; index3 < size2; index3++) {
-            const result4 = byteBuffer.readLong();
-            result1.push(result4);
-        }
-    }
-    packet.groupAuthIds = result1;
-    const result5 = byteBuffer.readLong();
-    packet.groupId = result5;
-    const result6 = ProtocolManager.getProtocol(18014).readObject(byteBuffer);
-    packet.groupTime = result6;
-    const result7 = byteBuffer.readLong();
-    packet.memberId = result7;
+    const list0 = byteBuffer.readLongArray();
+    packet.groupAuthIds = list0;
+    const result1 = byteBuffer.readLong();
+    packet.groupId = result1;
+    const result2 = byteBuffer.readPacket(18014);
+    packet.groupTime = result2;
+    const result3 = byteBuffer.readLong();
+    packet.memberId = result3;
     return packet;
 };
 

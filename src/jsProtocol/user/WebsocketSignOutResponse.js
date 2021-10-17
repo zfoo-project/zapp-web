@@ -9,16 +9,14 @@ WebsocketSignOutResponse.prototype.protocolId = function() {
     return 1003;
 };
 
-WebsocketSignOutResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+WebsocketSignOutResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeInt(packet.result);
 };
 
-WebsocketSignOutResponse.readObject = function(byteBuffer) {
+WebsocketSignOutResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

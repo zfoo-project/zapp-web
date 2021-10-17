@@ -11,18 +11,16 @@ ChannelTimeVO.prototype.protocolId = function() {
     return 18015;
 };
 
-ChannelTimeVO.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+ChannelTimeVO.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.channelId);
     byteBuffer.writeBoolean(packet.mute);
     byteBuffer.writeLong(packet.refreshTime);
 };
 
-ChannelTimeVO.readObject = function(byteBuffer) {
+ChannelTimeVO.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

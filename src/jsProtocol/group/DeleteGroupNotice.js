@@ -10,17 +10,15 @@ DeleteGroupNotice.prototype.protocolId = function() {
     return 19000;
 };
 
-DeleteGroupNotice.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+DeleteGroupNotice.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
     byteBuffer.writeLong(packet.groupId);
     byteBuffer.writeString(packet.groupName);
 };
 
-DeleteGroupNotice.readObject = function(byteBuffer) {
+DeleteGroupNotice.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

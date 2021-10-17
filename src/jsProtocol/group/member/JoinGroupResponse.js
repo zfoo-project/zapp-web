@@ -8,15 +8,13 @@ JoinGroupResponse.prototype.protocolId = function() {
     return 18413;
 };
 
-JoinGroupResponse.writeObject = function(byteBuffer, packet) {
-    if (packet === null) {
-        byteBuffer.writeBoolean(false);
+JoinGroupResponse.write = function(byteBuffer, packet) {
+    if (byteBuffer.writePacketFlag(packet)) {
         return;
     }
-    byteBuffer.writeBoolean(true);
 };
 
-JoinGroupResponse.readObject = function(byteBuffer) {
+JoinGroupResponse.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
