@@ -540,7 +540,7 @@ const ByteBuffer = function() {
         if (value === null) {
             this.writeInt(0);
         } else {
-            var protocolRegistration = ProtocolManager.getProtocol(protocolId)
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
             this.writeInt(value.length);
             value.forEach(element => {
                 protocolRegistration.write(this, element);
@@ -552,7 +552,7 @@ const ByteBuffer = function() {
         const array = [];
         const length = this.readInt();
         if (length > 0) {
-            var protocolRegistration = ProtocolManager.getProtocol(protocolId)
+            const protocolRegistration = ProtocolManager.getProtocol(protocolId);
             for (let index = 0; index < length; index++) {
                 array.push(protocolRegistration.read(this));
             }

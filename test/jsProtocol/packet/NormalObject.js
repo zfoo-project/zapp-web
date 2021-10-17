@@ -42,70 +42,42 @@ NormalObject.write = function(byteBuffer, packet) {
     byteBuffer.writeBoolean(packet.g);
     byteBuffer.writeString(packet.jj);
     ProtocolManager.getProtocol(102).write(byteBuffer, packet.kk);
-    if (packet.l === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.l.length);
-        packet.l.forEach(element0 => {
-            byteBuffer.writeInt(element0);
-        });
-    }
-    if (packet.ll === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.ll.length);
-        packet.ll.forEach(element1 => {
-            byteBuffer.writeLong(element1);
-        });
-    }
-    if (packet.lll === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.lll.length);
-        packet.lll.forEach(element2 => {
-            ProtocolManager.getProtocol(102).write(byteBuffer, element2);
-        });
-    }
-    if (packet.llll === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.llll.length);
-        packet.llll.forEach(element3 => {
-            byteBuffer.writeString(element3);
-        });
-    }
+    byteBuffer.writeIntArray(packet.l);
+    byteBuffer.writeLongArray(packet.ll);
+    byteBuffer.writePacketArray(packet.lll, 102);
+    byteBuffer.writeStringArray(packet.llll);
     if (packet.m === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.m.size);
-        packet.m.forEach((value5, key4) => {
-            byteBuffer.writeInt(key4);
-            byteBuffer.writeString(value5);
+        packet.m.forEach((value1, key0) => {
+            byteBuffer.writeInt(key0);
+            byteBuffer.writeString(value1);
         });
     }
     if (packet.mm === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.mm.size);
-        packet.mm.forEach((value7, key6) => {
-            byteBuffer.writeInt(key6);
-            ProtocolManager.getProtocol(102).write(byteBuffer, value7);
+        packet.mm.forEach((value3, key2) => {
+            byteBuffer.writeInt(key2);
+            ProtocolManager.getProtocol(102).write(byteBuffer, value3);
         });
     }
     if (packet.s === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.s.size);
-        packet.s.forEach(element8 => {
-            byteBuffer.writeInt(element8);
+        packet.s.forEach(element4 => {
+            byteBuffer.writeInt(element4);
         });
     }
     if (packet.ssss === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.ssss.size);
-        packet.ssss.forEach(element9 => {
-            byteBuffer.writeString(element9);
+        packet.ssss.forEach(element5 => {
+            byteBuffer.writeString(element5);
         });
     }
 };
@@ -115,100 +87,72 @@ NormalObject.read = function(byteBuffer) {
         return null;
     }
     const packet = new NormalObject();
-    const result10 = byteBuffer.readByte();
-    packet.a = result10;
-    const array11 = byteBuffer.readByteArray();
-    packet.aaa = array11;
-    const result12 = byteBuffer.readShort();
-    packet.b = result12;
-    const result13 = byteBuffer.readInt();
-    packet.c = result13;
-    const result14 = byteBuffer.readLong();
-    packet.d = result14;
-    const result15 = byteBuffer.readFloat();
-    packet.e = result15;
-    const result16 = byteBuffer.readDouble();
-    packet.f = result16;
-    const result17 = byteBuffer.readBoolean(); 
-    packet.g = result17;
-    const result18 = byteBuffer.readString();
-    packet.jj = result18;
-    const result19 = ProtocolManager.getProtocol(102).read(byteBuffer);
-    packet.kk = result19;
-    const result20 = [];
+    const result6 = byteBuffer.readByte();
+    packet.a = result6;
+    const array7 = byteBuffer.readByteArray();
+    packet.aaa = array7;
+    const result8 = byteBuffer.readShort();
+    packet.b = result8;
+    const result9 = byteBuffer.readInt();
+    packet.c = result9;
+    const result10 = byteBuffer.readLong();
+    packet.d = result10;
+    const result11 = byteBuffer.readFloat();
+    packet.e = result11;
+    const result12 = byteBuffer.readDouble();
+    packet.f = result12;
+    const result13 = byteBuffer.readBoolean(); 
+    packet.g = result13;
+    const result14 = byteBuffer.readString();
+    packet.jj = result14;
+    const result15 = ProtocolManager.getProtocol(102).read(byteBuffer);
+    packet.kk = result15;
+    const list16 = byteBuffer.readIntArray();
+    packet.l = list16;
+    const list17 = byteBuffer.readLongArray();
+    packet.ll = list17;
+    const list18 = byteBuffer.readPacketArray(102);
+    packet.lll = list18;
+    const list19 = byteBuffer.readStringArray();
+    packet.llll = list19;
+    const result20 = new Map();
     const size21 = byteBuffer.readInt();
     if (size21 > 0) {
         for (let index22 = 0; index22 < size21; index22++) {
             const result23 = byteBuffer.readInt();
-            result20.push(result23);
+            const result24 = byteBuffer.readString();
+            result20.set(result23, result24);
         }
     }
-    packet.l = result20;
-    const result24 = [];
-    const size25 = byteBuffer.readInt();
-    if (size25 > 0) {
-        for (let index26 = 0; index26 < size25; index26++) {
-            const result27 = byteBuffer.readLong();
-            result24.push(result27);
+    packet.m = result20;
+    const result25 = new Map();
+    const size26 = byteBuffer.readInt();
+    if (size26 > 0) {
+        for (let index27 = 0; index27 < size26; index27++) {
+            const result28 = byteBuffer.readInt();
+            const result29 = ProtocolManager.getProtocol(102).read(byteBuffer);
+            result25.set(result28, result29);
         }
     }
-    packet.ll = result24;
-    const result28 = [];
-    const size29 = byteBuffer.readInt();
-    if (size29 > 0) {
-        for (let index30 = 0; index30 < size29; index30++) {
-            const result31 = ProtocolManager.getProtocol(102).read(byteBuffer);
-            result28.push(result31);
+    packet.mm = result25;
+    const result30 = new Set();
+    const size31 = byteBuffer.readInt();
+    if (size31 > 0) {
+        for (let index32 = 0; index32 < size31; index32++) {
+            const result33 = byteBuffer.readInt();
+            result30.add(result33);
         }
     }
-    packet.lll = result28;
-    const result32 = [];
-    const size33 = byteBuffer.readInt();
-    if (size33 > 0) {
-        for (let index34 = 0; index34 < size33; index34++) {
-            const result35 = byteBuffer.readString();
-            result32.push(result35);
+    packet.s = result30;
+    const result34 = new Set();
+    const size35 = byteBuffer.readInt();
+    if (size35 > 0) {
+        for (let index36 = 0; index36 < size35; index36++) {
+            const result37 = byteBuffer.readString();
+            result34.add(result37);
         }
     }
-    packet.llll = result32;
-    const result36 = new Map();
-    const size37 = byteBuffer.readInt();
-    if (size37 > 0) {
-        for (let index38 = 0; index38 < size37; index38++) {
-            const result39 = byteBuffer.readInt();
-            const result40 = byteBuffer.readString();
-            result36.set(result39, result40);
-        }
-    }
-    packet.m = result36;
-    const result41 = new Map();
-    const size42 = byteBuffer.readInt();
-    if (size42 > 0) {
-        for (let index43 = 0; index43 < size42; index43++) {
-            const result44 = byteBuffer.readInt();
-            const result45 = ProtocolManager.getProtocol(102).read(byteBuffer);
-            result41.set(result44, result45);
-        }
-    }
-    packet.mm = result41;
-    const result46 = new Set();
-    const size47 = byteBuffer.readInt();
-    if (size47 > 0) {
-        for (let index48 = 0; index48 < size47; index48++) {
-            const result49 = byteBuffer.readInt();
-            result46.add(result49);
-        }
-    }
-    packet.s = result46;
-    const result50 = new Set();
-    const size51 = byteBuffer.readInt();
-    if (size51 > 0) {
-        for (let index52 = 0; index52 < size51; index52++) {
-            const result53 = byteBuffer.readString();
-            result50.add(result53);
-        }
-    }
-    packet.ssss = result50;
+    packet.ssss = result34;
     return packet;
 };
 
