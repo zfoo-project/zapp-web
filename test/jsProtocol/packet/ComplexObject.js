@@ -3,8 +3,7 @@ import ProtocolManager from '../ProtocolManager.js';
 // 包括了各种复杂的结构，数组，List，Set，Map
 //
 // @author jaysunxiao
-// @version 1.0
-// @since 2017 10.14 11:19
+// @version 3.0
 const ComplexObject = function(a, aa, aaa, aaaa, b, bb, bbb, bbbb, c, cc, ccc, cccc, d, dd, ddd, dddd, e, ee, eee, eeee, f, ff, fff, ffff, g, gg, ggg, gggg, h, hh, hhh, hhhh, jj, jjj, kk, kkk, l, ll, lll, llll, lllll, m, mm, mmm, mmmm, mmmmm, s, ss, sss, ssss, sssss) {
     // byte类型，最简单的整形
     this.a = a; // byte
@@ -64,10 +63,10 @@ const ComplexObject = function(a, aa, aaa, aaaa, b, bb, bbb, bbbb, c, cc, ccc, c
 };
 
 ComplexObject.prototype.protocolId = function() {
-    return 1160;
+    return 100;
 };
 
-ComplexObject.writeObject = function(byteBuffer, packet) {
+ComplexObject.write = function(byteBuffer, packet) {
     if (packet === null) {
         byteBuffer.writeBoolean(false);
         return;
@@ -75,190 +74,64 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
     byteBuffer.writeBoolean(true);
     byteBuffer.writeByte(packet.a);
     byteBuffer.writeByte(packet.aa);
-    if (packet.aaa === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.aaa.length);
-        packet.aaa.forEach(element0 => {
-            byteBuffer.writeByte(element0);
-        });
-    }
-    if (packet.aaaa === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.aaaa.length);
-        packet.aaaa.forEach(element1 => {
-            byteBuffer.writeByte(element1);
-        });
-    }
+    byteBuffer.writeByteArray(packet.aaa);
+    byteBuffer.writeByteArray(packet.aaaa);
     byteBuffer.writeShort(packet.b);
     byteBuffer.writeShort(packet.bb);
-    if (packet.bbb === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.bbb.length);
-        packet.bbb.forEach(element2 => {
-            byteBuffer.writeShort(element2);
-        });
-    }
-    if (packet.bbbb === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.bbbb.length);
-        packet.bbbb.forEach(element3 => {
-            byteBuffer.writeShort(element3);
-        });
-    }
+    byteBuffer.writeShortArray(packet.bbb);
+    byteBuffer.writeShortArray(packet.bbbb);
     byteBuffer.writeInt(packet.c);
     byteBuffer.writeInt(packet.cc);
-    if (packet.ccc === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.ccc.length);
-        packet.ccc.forEach(element4 => {
-            byteBuffer.writeInt(element4);
-        });
-    }
-    if (packet.cccc === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.cccc.length);
-        packet.cccc.forEach(element5 => {
-            byteBuffer.writeInt(element5);
-        });
-    }
+    byteBuffer.writeIntArray(packet.ccc);
+    byteBuffer.writeIntArray(packet.cccc);
     byteBuffer.writeLong(packet.d);
     byteBuffer.writeLong(packet.dd);
-    if (packet.ddd === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.ddd.length);
-        packet.ddd.forEach(element6 => {
-            byteBuffer.writeLong(element6);
-        });
-    }
-    if (packet.dddd === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.dddd.length);
-        packet.dddd.forEach(element7 => {
-            byteBuffer.writeLong(element7);
-        });
-    }
+    byteBuffer.writeLongArray(packet.ddd);
+    byteBuffer.writeLongArray(packet.dddd);
     byteBuffer.writeFloat(packet.e);
     byteBuffer.writeFloat(packet.ee);
-    if (packet.eee === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.eee.length);
-        packet.eee.forEach(element8 => {
-            byteBuffer.writeFloat(element8);
-        });
-    }
-    if (packet.eeee === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.eeee.length);
-        packet.eeee.forEach(element9 => {
-            byteBuffer.writeFloat(element9);
-        });
-    }
+    byteBuffer.writeFloatArray(packet.eee);
+    byteBuffer.writeFloatArray(packet.eeee);
     byteBuffer.writeDouble(packet.f);
     byteBuffer.writeDouble(packet.ff);
-    if (packet.fff === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.fff.length);
-        packet.fff.forEach(element10 => {
-            byteBuffer.writeDouble(element10);
-        });
-    }
-    if (packet.ffff === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.ffff.length);
-        packet.ffff.forEach(element11 => {
-            byteBuffer.writeDouble(element11);
-        });
-    }
+    byteBuffer.writeDoubleArray(packet.fff);
+    byteBuffer.writeDoubleArray(packet.ffff);
     byteBuffer.writeBoolean(packet.g);
     byteBuffer.writeBoolean(packet.gg);
-    if (packet.ggg === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.ggg.length);
-        packet.ggg.forEach(element12 => {
-            byteBuffer.writeBoolean(element12);
-        });
-    }
-    if (packet.gggg === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.gggg.length);
-        packet.gggg.forEach(element13 => {
-            byteBuffer.writeBoolean(element13);
-        });
-    }
+    byteBuffer.writeBooleanArray(packet.ggg);
+    byteBuffer.writeBooleanArray(packet.gggg);
     byteBuffer.writeChar(packet.h);
     byteBuffer.writeChar(packet.hh);
-    if (packet.hhh === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.hhh.length);
-        packet.hhh.forEach(element14 => {
-            byteBuffer.writeChar(element14);
-        });
-    }
-    if (packet.hhhh === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.hhhh.length);
-        packet.hhhh.forEach(element15 => {
-            byteBuffer.writeChar(element15);
-        });
-    }
+    byteBuffer.writeCharArray(packet.hhh);
+    byteBuffer.writeCharArray(packet.hhhh);
     byteBuffer.writeString(packet.jj);
-    if (packet.jjj === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.jjj.length);
-        packet.jjj.forEach(element16 => {
-            byteBuffer.writeString(element16);
-        });
-    }
-    ProtocolManager.getProtocol(1116).writeObject(byteBuffer, packet.kk);
-    if (packet.kkk === null) {
-        byteBuffer.writeInt(0);
-    } else {
-        byteBuffer.writeInt(packet.kkk.length);
-        packet.kkk.forEach(element17 => {
-            ProtocolManager.getProtocol(1116).writeObject(byteBuffer, element17);
-        });
-    }
+    byteBuffer.writeStringArray(packet.jjj);
+    ProtocolManager.getProtocol(102).write(byteBuffer, packet.kk);
+    byteBuffer.writePacketArray(packet.kkk, 102);
     if (packet.l === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.l.length);
-        packet.l.forEach(element18 => {
-            byteBuffer.writeInt(element18);
+        packet.l.forEach(element0 => {
+            byteBuffer.writeInt(element0);
         });
     }
     if (packet.ll === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.ll.length);
-        packet.ll.forEach(element19 => {
-            if (element19 === null) {
+        packet.ll.forEach(element1 => {
+            if (element1 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(element19.length);
-                element19.forEach(element20 => {
-                    if (element20 === null) {
+                byteBuffer.writeInt(element1.length);
+                element1.forEach(element2 => {
+                    if (element2 === null) {
                         byteBuffer.writeInt(0);
                     } else {
-                        byteBuffer.writeInt(element20.length);
-                        element20.forEach(element21 => {
-                            byteBuffer.writeInt(element21);
+                        byteBuffer.writeInt(element2.length);
+                        element2.forEach(element3 => {
+                            byteBuffer.writeInt(element3);
                         });
                     }
                 });
@@ -269,13 +142,13 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.lll.length);
-        packet.lll.forEach(element22 => {
-            if (element22 === null) {
+        packet.lll.forEach(element4 => {
+            if (element4 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(element22.length);
-                element22.forEach(element23 => {
-                    ProtocolManager.getProtocol(1116).writeObject(byteBuffer, element23);
+                byteBuffer.writeInt(element4.length);
+                element4.forEach(element5 => {
+                    ProtocolManager.getProtocol(102).write(byteBuffer, element5);
                 });
             }
         });
@@ -284,22 +157,22 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.llll.length);
-        packet.llll.forEach(element24 => {
-            byteBuffer.writeString(element24);
+        packet.llll.forEach(element6 => {
+            byteBuffer.writeString(element6);
         });
     }
     if (packet.lllll === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.lllll.length);
-        packet.lllll.forEach(element25 => {
-            if (element25 === null) {
+        packet.lllll.forEach(element7 => {
+            if (element7 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(element25.size);
-                element25.forEach((value27, key26) => {
-                    byteBuffer.writeInt(key26);
-                    byteBuffer.writeString(value27);
+                byteBuffer.writeInt(element7.size);
+                element7.forEach((value9, key8) => {
+                    byteBuffer.writeInt(key8);
+                    byteBuffer.writeString(value9);
                 });
             }
         });
@@ -308,32 +181,32 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.m.size);
-        packet.m.forEach((value29, key28) => {
-            byteBuffer.writeInt(key28);
-            byteBuffer.writeString(value29);
+        packet.m.forEach((value11, key10) => {
+            byteBuffer.writeInt(key10);
+            byteBuffer.writeString(value11);
         });
     }
     if (packet.mm === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.mm.size);
-        packet.mm.forEach((value31, key30) => {
-            byteBuffer.writeInt(key30);
-            ProtocolManager.getProtocol(1116).writeObject(byteBuffer, value31);
+        packet.mm.forEach((value13, key12) => {
+            byteBuffer.writeInt(key12);
+            ProtocolManager.getProtocol(102).write(byteBuffer, value13);
         });
     }
     if (packet.mmm === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.mmm.size);
-        packet.mmm.forEach((value33, key32) => {
-            ProtocolManager.getProtocol(1116).writeObject(byteBuffer, key32);
-            if (value33 === null) {
+        packet.mmm.forEach((value15, key14) => {
+            ProtocolManager.getProtocol(102).write(byteBuffer, key14);
+            if (value15 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(value33.length);
-                value33.forEach(element34 => {
-                    byteBuffer.writeInt(element34);
+                byteBuffer.writeInt(value15.length);
+                value15.forEach(element16 => {
+                    byteBuffer.writeInt(element16);
                 });
             }
         });
@@ -342,38 +215,38 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.mmmm.size);
-        packet.mmmm.forEach((value36, key35) => {
-            if (key35 === null) {
+        packet.mmmm.forEach((value18, key17) => {
+            if (key17 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(key35.length);
-                key35.forEach(element37 => {
-                    if (element37 === null) {
+                byteBuffer.writeInt(key17.length);
+                key17.forEach(element19 => {
+                    if (element19 === null) {
                         byteBuffer.writeInt(0);
                     } else {
-                        byteBuffer.writeInt(element37.length);
-                        element37.forEach(element38 => {
-                            ProtocolManager.getProtocol(1116).writeObject(byteBuffer, element38);
+                        byteBuffer.writeInt(element19.length);
+                        element19.forEach(element20 => {
+                            ProtocolManager.getProtocol(102).write(byteBuffer, element20);
                         });
                     }
                 });
             }
-            if (value36 === null) {
+            if (value18 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(value36.length);
-                value36.forEach(element39 => {
-                    if (element39 === null) {
+                byteBuffer.writeInt(value18.length);
+                value18.forEach(element21 => {
+                    if (element21 === null) {
                         byteBuffer.writeInt(0);
                     } else {
-                        byteBuffer.writeInt(element39.length);
-                        element39.forEach(element40 => {
-                            if (element40 === null) {
+                        byteBuffer.writeInt(element21.length);
+                        element21.forEach(element22 => {
+                            if (element22 === null) {
                                 byteBuffer.writeInt(0);
                             } else {
-                                byteBuffer.writeInt(element40.length);
-                                element40.forEach(element41 => {
-                                    byteBuffer.writeInt(element41);
+                                byteBuffer.writeInt(element22.length);
+                                element22.forEach(element23 => {
+                                    byteBuffer.writeInt(element23);
                                 });
                             }
                         });
@@ -386,35 +259,35 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.mmmmm.size);
-        packet.mmmmm.forEach((value43, key42) => {
-            if (key42 === null) {
+        packet.mmmmm.forEach((value25, key24) => {
+            if (key24 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(key42.length);
-                key42.forEach(element44 => {
-                    if (element44 === null) {
+                byteBuffer.writeInt(key24.length);
+                key24.forEach(element26 => {
+                    if (element26 === null) {
                         byteBuffer.writeInt(0);
                     } else {
-                        byteBuffer.writeInt(element44.size);
-                        element44.forEach((value46, key45) => {
-                            byteBuffer.writeInt(key45);
-                            byteBuffer.writeString(value46);
+                        byteBuffer.writeInt(element26.size);
+                        element26.forEach((value28, key27) => {
+                            byteBuffer.writeInt(key27);
+                            byteBuffer.writeString(value28);
                         });
                     }
                 });
             }
-            if (value43 === null) {
+            if (value25 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(value43.size);
-                value43.forEach(element47 => {
-                    if (element47 === null) {
+                byteBuffer.writeInt(value25.size);
+                value25.forEach(element29 => {
+                    if (element29 === null) {
                         byteBuffer.writeInt(0);
                     } else {
-                        byteBuffer.writeInt(element47.size);
-                        element47.forEach((value49, key48) => {
-                            byteBuffer.writeInt(key48);
-                            byteBuffer.writeString(value49);
+                        byteBuffer.writeInt(element29.size);
+                        element29.forEach((value31, key30) => {
+                            byteBuffer.writeInt(key30);
+                            byteBuffer.writeString(value31);
                         });
                     }
                 });
@@ -425,26 +298,26 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.s.size);
-        packet.s.forEach(element50 => {
-            byteBuffer.writeInt(element50);
+        packet.s.forEach(element32 => {
+            byteBuffer.writeInt(element32);
         });
     }
     if (packet.ss === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.ss.size);
-        packet.ss.forEach(element51 => {
-            if (element51 === null) {
+        packet.ss.forEach(element33 => {
+            if (element33 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(element51.size);
-                element51.forEach(element52 => {
-                    if (element52 === null) {
+                byteBuffer.writeInt(element33.size);
+                element33.forEach(element34 => {
+                    if (element34 === null) {
                         byteBuffer.writeInt(0);
                     } else {
-                        byteBuffer.writeInt(element52.length);
-                        element52.forEach(element53 => {
-                            byteBuffer.writeInt(element53);
+                        byteBuffer.writeInt(element34.length);
+                        element34.forEach(element35 => {
+                            byteBuffer.writeInt(element35);
                         });
                     }
                 });
@@ -455,13 +328,13 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.sss.size);
-        packet.sss.forEach(element54 => {
-            if (element54 === null) {
+        packet.sss.forEach(element36 => {
+            if (element36 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(element54.size);
-                element54.forEach(element55 => {
-                    ProtocolManager.getProtocol(1116).writeObject(byteBuffer, element55);
+                byteBuffer.writeInt(element36.size);
+                element36.forEach(element37 => {
+                    ProtocolManager.getProtocol(102).write(byteBuffer, element37);
                 });
             }
         });
@@ -470,501 +343,375 @@ ComplexObject.writeObject = function(byteBuffer, packet) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.ssss.size);
-        packet.ssss.forEach(element56 => {
-            byteBuffer.writeString(element56);
+        packet.ssss.forEach(element38 => {
+            byteBuffer.writeString(element38);
         });
     }
     if (packet.sssss === null) {
         byteBuffer.writeInt(0);
     } else {
         byteBuffer.writeInt(packet.sssss.size);
-        packet.sssss.forEach(element57 => {
-            if (element57 === null) {
+        packet.sssss.forEach(element39 => {
+            if (element39 === null) {
                 byteBuffer.writeInt(0);
             } else {
-                byteBuffer.writeInt(element57.size);
-                element57.forEach((value59, key58) => {
-                    byteBuffer.writeInt(key58);
-                    byteBuffer.writeString(value59);
+                byteBuffer.writeInt(element39.size);
+                element39.forEach((value41, key40) => {
+                    byteBuffer.writeInt(key40);
+                    byteBuffer.writeString(value41);
                 });
             }
         });
     }
 };
 
-ComplexObject.readObject = function(byteBuffer) {
+ComplexObject.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
     const packet = new ComplexObject();
-    const result60 = byteBuffer.readByte();
-    packet.a = result60;
-    const result61 = byteBuffer.readByte();
-    packet.aa = result61;
-    const result62 = [];
-    const size64 = byteBuffer.readInt();
-    if (size64 > 0) {
-        for (let index63 = 0; index63 < size64; index63++) {
-            const result65 = byteBuffer.readByte();
-            result62.push(result65);
+    const result42 = byteBuffer.readByte();
+    packet.a = result42;
+    const result43 = byteBuffer.readByte();
+    packet.aa = result43;
+    const array44 = byteBuffer.readByteArray();
+    packet.aaa = array44;
+    const array45 = byteBuffer.readByteArray();
+    packet.aaaa = array45;
+    const result46 = byteBuffer.readShort();
+    packet.b = result46;
+    const result47 = byteBuffer.readShort();
+    packet.bb = result47;
+    const array48 = byteBuffer.readShortArray();
+    packet.bbb = array48;
+    const array49 = byteBuffer.readShortArray();
+    packet.bbbb = array49;
+    const result50 = byteBuffer.readInt();
+    packet.c = result50;
+    const result51 = byteBuffer.readInt();
+    packet.cc = result51;
+    const array52 = byteBuffer.readIntArray();
+    packet.ccc = array52;
+    const array53 = byteBuffer.readIntArray();
+    packet.cccc = array53;
+    const result54 = byteBuffer.readLong();
+    packet.d = result54;
+    const result55 = byteBuffer.readLong();
+    packet.dd = result55;
+    const array56 = byteBuffer.readLongArray();
+    packet.ddd = array56;
+    const array57 = byteBuffer.readLongArray();
+    packet.dddd = array57;
+    const result58 = byteBuffer.readFloat();
+    packet.e = result58;
+    const result59 = byteBuffer.readFloat();
+    packet.ee = result59;
+    const array60 = byteBuffer.readFloatArray();
+    packet.eee = array60;
+    const array61 = byteBuffer.readFloatArray();
+    packet.eeee = array61;
+    const result62 = byteBuffer.readDouble();
+    packet.f = result62;
+    const result63 = byteBuffer.readDouble();
+    packet.ff = result63;
+    const array64 = byteBuffer.readDoubleArray();
+    packet.fff = array64;
+    const array65 = byteBuffer.readDoubleArray();
+    packet.ffff = array65;
+    const result66 = byteBuffer.readBoolean(); 
+    packet.g = result66;
+    const result67 = byteBuffer.readBoolean(); 
+    packet.gg = result67;
+    const array68 = byteBuffer.readBooleanArray();
+    packet.ggg = array68;
+    const array69 = byteBuffer.readBooleanArray();
+    packet.gggg = array69;
+    const result70 = byteBuffer.readChar();
+    packet.h = result70;
+    const result71 = byteBuffer.readChar();
+    packet.hh = result71;
+    const array72 = byteBuffer.readCharArray();
+    packet.hhh = array72;
+    const array73 = byteBuffer.readCharArray();
+    packet.hhhh = array73;
+    const result74 = byteBuffer.readString();
+    packet.jj = result74;
+    const array75 = byteBuffer.readStringArray();
+    packet.jjj = array75;
+    const result76 = ProtocolManager.getProtocol(102).read(byteBuffer);
+    packet.kk = result76;
+    const array77 = byteBuffer.readPacketArray(102);
+    packet.kkk = array77;
+    const result78 = [];
+    const size79 = byteBuffer.readInt();
+    if (size79 > 0) {
+        for (let index80 = 0; index80 < size79; index80++) {
+            const result81 = byteBuffer.readInt();
+            result78.push(result81);
         }
     }
-    packet.aaa = result62;
-    const result66 = [];
-    const size68 = byteBuffer.readInt();
-    if (size68 > 0) {
-        for (let index67 = 0; index67 < size68; index67++) {
-            const result69 = byteBuffer.readByte();
-            result66.push(result69);
-        }
-    }
-    packet.aaaa = result66;
-    const result70 = byteBuffer.readShort();
-    packet.b = result70;
-    const result71 = byteBuffer.readShort();
-    packet.bb = result71;
-    const result72 = [];
-    const size74 = byteBuffer.readInt();
-    if (size74 > 0) {
-        for (let index73 = 0; index73 < size74; index73++) {
-            const result75 = byteBuffer.readShort();
-            result72.push(result75);
-        }
-    }
-    packet.bbb = result72;
-    const result76 = [];
-    const size78 = byteBuffer.readInt();
-    if (size78 > 0) {
-        for (let index77 = 0; index77 < size78; index77++) {
-            const result79 = byteBuffer.readShort();
-            result76.push(result79);
-        }
-    }
-    packet.bbbb = result76;
-    const result80 = byteBuffer.readInt();
-    packet.c = result80;
-    const result81 = byteBuffer.readInt();
-    packet.cc = result81;
+    packet.l = result78;
     const result82 = [];
-    const size84 = byteBuffer.readInt();
-    if (size84 > 0) {
-        for (let index83 = 0; index83 < size84; index83++) {
-            const result85 = byteBuffer.readInt();
+    const size83 = byteBuffer.readInt();
+    if (size83 > 0) {
+        for (let index84 = 0; index84 < size83; index84++) {
+            const result85 = [];
+            const size86 = byteBuffer.readInt();
+            if (size86 > 0) {
+                for (let index87 = 0; index87 < size86; index87++) {
+                    const result88 = [];
+                    const size89 = byteBuffer.readInt();
+                    if (size89 > 0) {
+                        for (let index90 = 0; index90 < size89; index90++) {
+                            const result91 = byteBuffer.readInt();
+                            result88.push(result91);
+                        }
+                    }
+                    result85.push(result88);
+                }
+            }
             result82.push(result85);
         }
     }
-    packet.ccc = result82;
-    const result86 = [];
-    const size88 = byteBuffer.readInt();
-    if (size88 > 0) {
-        for (let index87 = 0; index87 < size88; index87++) {
-            const result89 = byteBuffer.readInt();
-            result86.push(result89);
-        }
-    }
-    packet.cccc = result86;
-    const result90 = byteBuffer.readLong();
-    packet.d = result90;
-    const result91 = byteBuffer.readLong();
-    packet.dd = result91;
+    packet.ll = result82;
     const result92 = [];
-    const size94 = byteBuffer.readInt();
-    if (size94 > 0) {
-        for (let index93 = 0; index93 < size94; index93++) {
-            const result95 = byteBuffer.readLong();
+    const size93 = byteBuffer.readInt();
+    if (size93 > 0) {
+        for (let index94 = 0; index94 < size93; index94++) {
+            const result95 = [];
+            const size96 = byteBuffer.readInt();
+            if (size96 > 0) {
+                for (let index97 = 0; index97 < size96; index97++) {
+                    const result98 = ProtocolManager.getProtocol(102).read(byteBuffer);
+                    result95.push(result98);
+                }
+            }
             result92.push(result95);
         }
     }
-    packet.ddd = result92;
-    const result96 = [];
-    const size98 = byteBuffer.readInt();
-    if (size98 > 0) {
-        for (let index97 = 0; index97 < size98; index97++) {
-            const result99 = byteBuffer.readLong();
-            result96.push(result99);
+    packet.lll = result92;
+    const result99 = [];
+    const size100 = byteBuffer.readInt();
+    if (size100 > 0) {
+        for (let index101 = 0; index101 < size100; index101++) {
+            const result102 = byteBuffer.readString();
+            result99.push(result102);
         }
     }
-    packet.dddd = result96;
-    const result100 = byteBuffer.readFloat();
-    packet.e = result100;
-    const result101 = byteBuffer.readFloat();
-    packet.ee = result101;
-    const result102 = [];
+    packet.llll = result99;
+    const result103 = [];
     const size104 = byteBuffer.readInt();
     if (size104 > 0) {
-        for (let index103 = 0; index103 < size104; index103++) {
-            const result105 = byteBuffer.readFloat();
-            result102.push(result105);
+        for (let index105 = 0; index105 < size104; index105++) {
+            const result106 = new Map();
+            const size107 = byteBuffer.readInt();
+            if (size107 > 0) {
+                for (let index108 = 0; index108 < size107; index108++) {
+                    const result109 = byteBuffer.readInt();
+                    const result110 = byteBuffer.readString();
+                    result106.set(result109, result110);
+                }
+            }
+            result103.push(result106);
         }
     }
-    packet.eee = result102;
-    const result106 = [];
-    const size108 = byteBuffer.readInt();
-    if (size108 > 0) {
-        for (let index107 = 0; index107 < size108; index107++) {
-            const result109 = byteBuffer.readFloat();
-            result106.push(result109);
+    packet.lllll = result103;
+    const result111 = new Map();
+    const size112 = byteBuffer.readInt();
+    if (size112 > 0) {
+        for (let index113 = 0; index113 < size112; index113++) {
+            const result114 = byteBuffer.readInt();
+            const result115 = byteBuffer.readString();
+            result111.set(result114, result115);
         }
     }
-    packet.eeee = result106;
-    const result110 = byteBuffer.readDouble();
-    packet.f = result110;
-    const result111 = byteBuffer.readDouble();
-    packet.ff = result111;
-    const result112 = [];
-    const size114 = byteBuffer.readInt();
-    if (size114 > 0) {
-        for (let index113 = 0; index113 < size114; index113++) {
-            const result115 = byteBuffer.readDouble();
-            result112.push(result115);
+    packet.m = result111;
+    const result116 = new Map();
+    const size117 = byteBuffer.readInt();
+    if (size117 > 0) {
+        for (let index118 = 0; index118 < size117; index118++) {
+            const result119 = byteBuffer.readInt();
+            const result120 = ProtocolManager.getProtocol(102).read(byteBuffer);
+            result116.set(result119, result120);
         }
     }
-    packet.fff = result112;
-    const result116 = [];
-    const size118 = byteBuffer.readInt();
-    if (size118 > 0) {
-        for (let index117 = 0; index117 < size118; index117++) {
-            const result119 = byteBuffer.readDouble();
-            result116.push(result119);
+    packet.mm = result116;
+    const result121 = new Map();
+    const size122 = byteBuffer.readInt();
+    if (size122 > 0) {
+        for (let index123 = 0; index123 < size122; index123++) {
+            const result124 = ProtocolManager.getProtocol(102).read(byteBuffer);
+            const result125 = [];
+            const size126 = byteBuffer.readInt();
+            if (size126 > 0) {
+                for (let index127 = 0; index127 < size126; index127++) {
+                    const result128 = byteBuffer.readInt();
+                    result125.push(result128);
+                }
+            }
+            result121.set(result124, result125);
         }
     }
-    packet.ffff = result116;
-    const result120 = byteBuffer.readBoolean(); 
-    packet.g = result120;
-    const result121 = byteBuffer.readBoolean(); 
-    packet.gg = result121;
-    const result122 = [];
-    const size124 = byteBuffer.readInt();
-    if (size124 > 0) {
-        for (let index123 = 0; index123 < size124; index123++) {
-            const result125 = byteBuffer.readBoolean(); 
-            result122.push(result125);
-        }
-    }
-    packet.ggg = result122;
-    const result126 = [];
-    const size128 = byteBuffer.readInt();
-    if (size128 > 0) {
-        for (let index127 = 0; index127 < size128; index127++) {
-            const result129 = byteBuffer.readBoolean(); 
-            result126.push(result129);
-        }
-    }
-    packet.gggg = result126;
-    const result130 = byteBuffer.readChar();
-    packet.h = result130;
-    const result131 = byteBuffer.readChar();
-    packet.hh = result131;
-    const result132 = [];
-    const size134 = byteBuffer.readInt();
-    if (size134 > 0) {
-        for (let index133 = 0; index133 < size134; index133++) {
-            const result135 = byteBuffer.readChar();
-            result132.push(result135);
-        }
-    }
-    packet.hhh = result132;
-    const result136 = [];
-    const size138 = byteBuffer.readInt();
-    if (size138 > 0) {
-        for (let index137 = 0; index137 < size138; index137++) {
-            const result139 = byteBuffer.readChar();
-            result136.push(result139);
-        }
-    }
-    packet.hhhh = result136;
-    const result140 = byteBuffer.readString();
-    packet.jj = result140;
-    const result141 = [];
-    const size143 = byteBuffer.readInt();
-    if (size143 > 0) {
-        for (let index142 = 0; index142 < size143; index142++) {
-            const result144 = byteBuffer.readString();
-            result141.push(result144);
-        }
-    }
-    packet.jjj = result141;
-    const result145 = ProtocolManager.getProtocol(1116).readObject(byteBuffer);
-    packet.kk = result145;
-    const result146 = [];
-    const size148 = byteBuffer.readInt();
-    if (size148 > 0) {
-        for (let index147 = 0; index147 < size148; index147++) {
-            const result149 = ProtocolManager.getProtocol(1116).readObject(byteBuffer);
-            result146.push(result149);
-        }
-    }
-    packet.kkk = result146;
-    const result150 = [];
-    const size151 = byteBuffer.readInt();
-    if (size151 > 0) {
-        for (let index152 = 0; index152 < size151; index152++) {
-            const result153 = byteBuffer.readInt();
-            result150.push(result153);
-        }
-    }
-    packet.l = result150;
-    const result154 = [];
-    const size155 = byteBuffer.readInt();
-    if (size155 > 0) {
-        for (let index156 = 0; index156 < size155; index156++) {
-            const result157 = [];
-            const size158 = byteBuffer.readInt();
-            if (size158 > 0) {
-                for (let index159 = 0; index159 < size158; index159++) {
-                    const result160 = [];
-                    const size161 = byteBuffer.readInt();
-                    if (size161 > 0) {
-                        for (let index162 = 0; index162 < size161; index162++) {
-                            const result163 = byteBuffer.readInt();
-                            result160.push(result163);
+    packet.mmm = result121;
+    const result129 = new Map();
+    const size130 = byteBuffer.readInt();
+    if (size130 > 0) {
+        for (let index131 = 0; index131 < size130; index131++) {
+            const result132 = [];
+            const size133 = byteBuffer.readInt();
+            if (size133 > 0) {
+                for (let index134 = 0; index134 < size133; index134++) {
+                    const result135 = [];
+                    const size136 = byteBuffer.readInt();
+                    if (size136 > 0) {
+                        for (let index137 = 0; index137 < size136; index137++) {
+                            const result138 = ProtocolManager.getProtocol(102).read(byteBuffer);
+                            result135.push(result138);
                         }
                     }
-                    result157.push(result160);
+                    result132.push(result135);
                 }
             }
-            result154.push(result157);
-        }
-    }
-    packet.ll = result154;
-    const result164 = [];
-    const size165 = byteBuffer.readInt();
-    if (size165 > 0) {
-        for (let index166 = 0; index166 < size165; index166++) {
-            const result167 = [];
-            const size168 = byteBuffer.readInt();
-            if (size168 > 0) {
-                for (let index169 = 0; index169 < size168; index169++) {
-                    const result170 = ProtocolManager.getProtocol(1116).readObject(byteBuffer);
-                    result167.push(result170);
+            const result139 = [];
+            const size140 = byteBuffer.readInt();
+            if (size140 > 0) {
+                for (let index141 = 0; index141 < size140; index141++) {
+                    const result142 = [];
+                    const size143 = byteBuffer.readInt();
+                    if (size143 > 0) {
+                        for (let index144 = 0; index144 < size143; index144++) {
+                            const result145 = [];
+                            const size146 = byteBuffer.readInt();
+                            if (size146 > 0) {
+                                for (let index147 = 0; index147 < size146; index147++) {
+                                    const result148 = byteBuffer.readInt();
+                                    result145.push(result148);
+                                }
+                            }
+                            result142.push(result145);
+                        }
+                    }
+                    result139.push(result142);
                 }
             }
-            result164.push(result167);
+            result129.set(result132, result139);
         }
     }
-    packet.lll = result164;
-    const result171 = [];
-    const size172 = byteBuffer.readInt();
-    if (size172 > 0) {
-        for (let index173 = 0; index173 < size172; index173++) {
-            const result174 = byteBuffer.readString();
-            result171.push(result174);
-        }
-    }
-    packet.llll = result171;
-    const result175 = [];
-    const size176 = byteBuffer.readInt();
-    if (size176 > 0) {
-        for (let index177 = 0; index177 < size176; index177++) {
-            const result178 = new Map();
-            const size179 = byteBuffer.readInt();
-            if (size179 > 0) {
-                for (let index180 = 0; index180 < size179; index180++) {
-                    const result181 = byteBuffer.readInt();
-                    const result182 = byteBuffer.readString();
-                    result178.set(result181, result182);
+    packet.mmmm = result129;
+    const result149 = new Map();
+    const size150 = byteBuffer.readInt();
+    if (size150 > 0) {
+        for (let index151 = 0; index151 < size150; index151++) {
+            const result152 = [];
+            const size153 = byteBuffer.readInt();
+            if (size153 > 0) {
+                for (let index154 = 0; index154 < size153; index154++) {
+                    const result155 = new Map();
+                    const size156 = byteBuffer.readInt();
+                    if (size156 > 0) {
+                        for (let index157 = 0; index157 < size156; index157++) {
+                            const result158 = byteBuffer.readInt();
+                            const result159 = byteBuffer.readString();
+                            result155.set(result158, result159);
+                        }
+                    }
+                    result152.push(result155);
                 }
             }
-            result175.push(result178);
+            const result160 = new Set();
+            const size161 = byteBuffer.readInt();
+            if (size161 > 0) {
+                for (let index162 = 0; index162 < size161; index162++) {
+                    const result163 = new Map();
+                    const size164 = byteBuffer.readInt();
+                    if (size164 > 0) {
+                        for (let index165 = 0; index165 < size164; index165++) {
+                            const result166 = byteBuffer.readInt();
+                            const result167 = byteBuffer.readString();
+                            result163.set(result166, result167);
+                        }
+                    }
+                    result160.add(result163);
+                }
+            }
+            result149.set(result152, result160);
         }
     }
-    packet.lllll = result175;
-    const result183 = new Map();
-    const size184 = byteBuffer.readInt();
-    if (size184 > 0) {
-        for (let index185 = 0; index185 < size184; index185++) {
-            const result186 = byteBuffer.readInt();
-            const result187 = byteBuffer.readString();
-            result183.set(result186, result187);
+    packet.mmmmm = result149;
+    const result168 = new Set();
+    const size169 = byteBuffer.readInt();
+    if (size169 > 0) {
+        for (let index170 = 0; index170 < size169; index170++) {
+            const result171 = byteBuffer.readInt();
+            result168.add(result171);
         }
     }
-    packet.m = result183;
-    const result188 = new Map();
-    const size189 = byteBuffer.readInt();
-    if (size189 > 0) {
-        for (let index190 = 0; index190 < size189; index190++) {
-            const result191 = byteBuffer.readInt();
-            const result192 = ProtocolManager.getProtocol(1116).readObject(byteBuffer);
-            result188.set(result191, result192);
+    packet.s = result168;
+    const result172 = new Set();
+    const size173 = byteBuffer.readInt();
+    if (size173 > 0) {
+        for (let index174 = 0; index174 < size173; index174++) {
+            const result175 = new Set();
+            const size176 = byteBuffer.readInt();
+            if (size176 > 0) {
+                for (let index177 = 0; index177 < size176; index177++) {
+                    const result178 = [];
+                    const size179 = byteBuffer.readInt();
+                    if (size179 > 0) {
+                        for (let index180 = 0; index180 < size179; index180++) {
+                            const result181 = byteBuffer.readInt();
+                            result178.push(result181);
+                        }
+                    }
+                    result175.add(result178);
+                }
+            }
+            result172.add(result175);
         }
     }
-    packet.mm = result188;
-    const result193 = new Map();
+    packet.ss = result172;
+    const result182 = new Set();
+    const size183 = byteBuffer.readInt();
+    if (size183 > 0) {
+        for (let index184 = 0; index184 < size183; index184++) {
+            const result185 = new Set();
+            const size186 = byteBuffer.readInt();
+            if (size186 > 0) {
+                for (let index187 = 0; index187 < size186; index187++) {
+                    const result188 = ProtocolManager.getProtocol(102).read(byteBuffer);
+                    result185.add(result188);
+                }
+            }
+            result182.add(result185);
+        }
+    }
+    packet.sss = result182;
+    const result189 = new Set();
+    const size190 = byteBuffer.readInt();
+    if (size190 > 0) {
+        for (let index191 = 0; index191 < size190; index191++) {
+            const result192 = byteBuffer.readString();
+            result189.add(result192);
+        }
+    }
+    packet.ssss = result189;
+    const result193 = new Set();
     const size194 = byteBuffer.readInt();
     if (size194 > 0) {
         for (let index195 = 0; index195 < size194; index195++) {
-            const result196 = ProtocolManager.getProtocol(1116).readObject(byteBuffer);
-            const result197 = [];
-            const size198 = byteBuffer.readInt();
-            if (size198 > 0) {
-                for (let index199 = 0; index199 < size198; index199++) {
-                    const result200 = byteBuffer.readInt();
-                    result197.push(result200);
+            const result196 = new Map();
+            const size197 = byteBuffer.readInt();
+            if (size197 > 0) {
+                for (let index198 = 0; index198 < size197; index198++) {
+                    const result199 = byteBuffer.readInt();
+                    const result200 = byteBuffer.readString();
+                    result196.set(result199, result200);
                 }
             }
-            result193.set(result196, result197);
+            result193.add(result196);
         }
     }
-    packet.mmm = result193;
-    const result201 = new Map();
-    const size202 = byteBuffer.readInt();
-    if (size202 > 0) {
-        for (let index203 = 0; index203 < size202; index203++) {
-            const result204 = [];
-            const size205 = byteBuffer.readInt();
-            if (size205 > 0) {
-                for (let index206 = 0; index206 < size205; index206++) {
-                    const result207 = [];
-                    const size208 = byteBuffer.readInt();
-                    if (size208 > 0) {
-                        for (let index209 = 0; index209 < size208; index209++) {
-                            const result210 = ProtocolManager.getProtocol(1116).readObject(byteBuffer);
-                            result207.push(result210);
-                        }
-                    }
-                    result204.push(result207);
-                }
-            }
-            const result211 = [];
-            const size212 = byteBuffer.readInt();
-            if (size212 > 0) {
-                for (let index213 = 0; index213 < size212; index213++) {
-                    const result214 = [];
-                    const size215 = byteBuffer.readInt();
-                    if (size215 > 0) {
-                        for (let index216 = 0; index216 < size215; index216++) {
-                            const result217 = [];
-                            const size218 = byteBuffer.readInt();
-                            if (size218 > 0) {
-                                for (let index219 = 0; index219 < size218; index219++) {
-                                    const result220 = byteBuffer.readInt();
-                                    result217.push(result220);
-                                }
-                            }
-                            result214.push(result217);
-                        }
-                    }
-                    result211.push(result214);
-                }
-            }
-            result201.set(result204, result211);
-        }
-    }
-    packet.mmmm = result201;
-    const result221 = new Map();
-    const size222 = byteBuffer.readInt();
-    if (size222 > 0) {
-        for (let index223 = 0; index223 < size222; index223++) {
-            const result224 = [];
-            const size225 = byteBuffer.readInt();
-            if (size225 > 0) {
-                for (let index226 = 0; index226 < size225; index226++) {
-                    const result227 = new Map();
-                    const size228 = byteBuffer.readInt();
-                    if (size228 > 0) {
-                        for (let index229 = 0; index229 < size228; index229++) {
-                            const result230 = byteBuffer.readInt();
-                            const result231 = byteBuffer.readString();
-                            result227.set(result230, result231);
-                        }
-                    }
-                    result224.push(result227);
-                }
-            }
-            const result232 = new Set();
-            const size233 = byteBuffer.readInt();
-            if (size233 > 0) {
-                for (let index234 = 0; index234 < size233; index234++) {
-                    const result235 = new Map();
-                    const size236 = byteBuffer.readInt();
-                    if (size236 > 0) {
-                        for (let index237 = 0; index237 < size236; index237++) {
-                            const result238 = byteBuffer.readInt();
-                            const result239 = byteBuffer.readString();
-                            result235.set(result238, result239);
-                        }
-                    }
-                    result232.add(result235);
-                }
-            }
-            result221.set(result224, result232);
-        }
-    }
-    packet.mmmmm = result221;
-    const result240 = new Set();
-    const size241 = byteBuffer.readInt();
-    if (size241 > 0) {
-        for (let index242 = 0; index242 < size241; index242++) {
-            const result243 = byteBuffer.readInt();
-            result240.add(result243);
-        }
-    }
-    packet.s = result240;
-    const result244 = new Set();
-    const size245 = byteBuffer.readInt();
-    if (size245 > 0) {
-        for (let index246 = 0; index246 < size245; index246++) {
-            const result247 = new Set();
-            const size248 = byteBuffer.readInt();
-            if (size248 > 0) {
-                for (let index249 = 0; index249 < size248; index249++) {
-                    const result250 = [];
-                    const size251 = byteBuffer.readInt();
-                    if (size251 > 0) {
-                        for (let index252 = 0; index252 < size251; index252++) {
-                            const result253 = byteBuffer.readInt();
-                            result250.push(result253);
-                        }
-                    }
-                    result247.add(result250);
-                }
-            }
-            result244.add(result247);
-        }
-    }
-    packet.ss = result244;
-    const result254 = new Set();
-    const size255 = byteBuffer.readInt();
-    if (size255 > 0) {
-        for (let index256 = 0; index256 < size255; index256++) {
-            const result257 = new Set();
-            const size258 = byteBuffer.readInt();
-            if (size258 > 0) {
-                for (let index259 = 0; index259 < size258; index259++) {
-                    const result260 = ProtocolManager.getProtocol(1116).readObject(byteBuffer);
-                    result257.add(result260);
-                }
-            }
-            result254.add(result257);
-        }
-    }
-    packet.sss = result254;
-    const result261 = new Set();
-    const size262 = byteBuffer.readInt();
-    if (size262 > 0) {
-        for (let index263 = 0; index263 < size262; index263++) {
-            const result264 = byteBuffer.readString();
-            result261.add(result264);
-        }
-    }
-    packet.ssss = result261;
-    const result265 = new Set();
-    const size266 = byteBuffer.readInt();
-    if (size266 > 0) {
-        for (let index267 = 0; index267 < size266; index267++) {
-            const result268 = new Map();
-            const size269 = byteBuffer.readInt();
-            if (size269 > 0) {
-                for (let index270 = 0; index270 < size269; index270++) {
-                    const result271 = byteBuffer.readInt();
-                    const result272 = byteBuffer.readString();
-                    result268.set(result271, result272);
-                }
-            }
-            result265.add(result268);
-        }
-    }
-    packet.sssss = result265;
+    packet.sssss = result193;
     return packet;
 };
 

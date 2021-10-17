@@ -1,7 +1,6 @@
 import ProtocolManager from '../ProtocolManager.js';
 // @author jaysunxiao
-// @version 1.0
-// @since 2017 10.12 15:39
+// @version 3.0
 const ObjectA = function(a, m, objectB) {
     this.a = a; // int
     this.m = m; // java.util.Map<java.lang.Integer, java.lang.String>
@@ -9,10 +8,10 @@ const ObjectA = function(a, m, objectB) {
 };
 
 ObjectA.prototype.protocolId = function() {
-    return 1116;
+    return 102;
 };
 
-ObjectA.writeObject = function(byteBuffer, packet) {
+ObjectA.write = function(byteBuffer, packet) {
     if (packet === null) {
         byteBuffer.writeBoolean(false);
         return;
@@ -28,10 +27,10 @@ ObjectA.writeObject = function(byteBuffer, packet) {
             byteBuffer.writeString(value1);
         });
     }
-    ProtocolManager.getProtocol(1117).writeObject(byteBuffer, packet.objectB);
+    ProtocolManager.getProtocol(103).write(byteBuffer, packet.objectB);
 };
 
-ObjectA.readObject = function(byteBuffer) {
+ObjectA.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }
@@ -48,7 +47,7 @@ ObjectA.readObject = function(byteBuffer) {
         }
     }
     packet.m = result3;
-    const result8 = ProtocolManager.getProtocol(1117).readObject(byteBuffer);
+    const result8 = ProtocolManager.getProtocol(103).read(byteBuffer);
     packet.objectB = result8;
     return packet;
 };

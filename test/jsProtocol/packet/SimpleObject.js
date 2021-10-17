@@ -1,16 +1,15 @@
 // @author jaysunxiao
-// @version 1.0
-// @since 2021-03-27 15:18
+// @version 3.0
 const SimpleObject = function(c, g) {
     this.c = c; // int
     this.g = g; // boolean
 };
 
 SimpleObject.prototype.protocolId = function() {
-    return 1163;
+    return 104;
 };
 
-SimpleObject.writeObject = function(byteBuffer, packet) {
+SimpleObject.write = function(byteBuffer, packet) {
     if (packet === null) {
         byteBuffer.writeBoolean(false);
         return;
@@ -20,7 +19,7 @@ SimpleObject.writeObject = function(byteBuffer, packet) {
     byteBuffer.writeBoolean(packet.g);
 };
 
-SimpleObject.readObject = function(byteBuffer) {
+SimpleObject.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

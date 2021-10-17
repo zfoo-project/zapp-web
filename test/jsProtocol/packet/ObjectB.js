@@ -1,15 +1,14 @@
 // @author jaysunxiao
-// @version 1.0
-// @since 2017 10.12 15:39
+// @version 3.0
 const ObjectB = function(flag) {
     this.flag = flag; // boolean
 };
 
 ObjectB.prototype.protocolId = function() {
-    return 1117;
+    return 103;
 };
 
-ObjectB.writeObject = function(byteBuffer, packet) {
+ObjectB.write = function(byteBuffer, packet) {
     if (packet === null) {
         byteBuffer.writeBoolean(false);
         return;
@@ -18,7 +17,7 @@ ObjectB.writeObject = function(byteBuffer, packet) {
     byteBuffer.writeBoolean(packet.flag);
 };
 
-ObjectB.readObject = function(byteBuffer) {
+ObjectB.read = function(byteBuffer) {
     if (!byteBuffer.readBoolean()) {
         return null;
     }

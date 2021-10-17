@@ -1,5 +1,7 @@
 import { readInt64, writeInt64 } from './longbits.js';
+import ProtocolManager from '../ProtocolManager.js';
 
+const empty_str = '';
 const initSize = 128;
 const maxSize = 655537;
 
@@ -295,7 +297,7 @@ const ByteBuffer = function() {
 
     this.writeChar = function(value) {
         if (value === null || value === undefined || value.length === 0) {
-            this.writeInt(0);
+            this.writeString(empty_str);
             return;
         }
         this.writeString(value.charAt(0));
@@ -322,7 +324,7 @@ const ByteBuffer = function() {
     this.readString = function() {
         const length = this.readInt();
         if (length <= 0) {
-            return '';
+            return empty_str;
         }
         const uint8Array = new Uint8Array(this.buffer.slice(this.readOffset, this.readOffset + length));
         const value = decoder.decode(uint8Array);
@@ -334,6 +336,228 @@ const ByteBuffer = function() {
         const result = new ArrayBuffer(this.writeOffset);
         new Uint8Array(result).set(new Uint8Array(this.buffer.slice(0, this.writeOffset)));
         return result;
+    };
+
+    this.writeBooleanArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeBoolean(element);
+            });
+        }
+    };
+
+    this.readBooleanArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readBoolean());
+            }
+        }
+        return array;
+    };
+
+    this.writeByteArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeByte(element);
+            });
+        }
+    };
+
+    this.readByteArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readByte());
+            }
+        }
+        return array;
+    };
+
+    this.writeShortArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeShort(element);
+            });
+        }
+    };
+
+    this.readShortArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readShort());
+            }
+        }
+        return array;
+    };
+
+    this.writeIntArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeInt(element);
+            });
+        }
+    };
+
+    this.readIntArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readInt());
+            }
+        }
+        return array;
+    };
+
+    this.writeLongArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeLong(element);
+            });
+        }
+    };
+
+    this.readLongArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readLong());
+            }
+        }
+        return array;
+    };
+
+    this.writeFloatArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeFloat(element);
+            });
+        }
+    };
+
+    this.readFloatArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readFloat());
+            }
+        }
+        return array;
+    };
+
+    this.writeDoubleArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeDouble(element);
+            });
+        }
+    };
+
+    this.readDoubleArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readDouble());
+            }
+        }
+        return array;
+    };
+
+    this.writeStringArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeString(element);
+            });
+        }
+    };
+
+    this.readStringArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readString());
+            }
+        }
+        return array;
+    };
+
+    this.writeCharArray = function(value) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            this.writeInt(value.length);
+            value.forEach(element => {
+                this.writeChar(element);
+            });
+        }
+    };
+
+    this.readCharArray = function() {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            for (let index = 0; index < length; index++) {
+                array.push(this.readChar());
+            }
+        }
+        return array;
+    };
+
+    this.writePacketArray = function(value, protocolId) {
+        if (value === null) {
+            this.writeInt(0);
+        } else {
+            var protocolRegistration = ProtocolManager.getProtocol(protocolId)
+            this.writeInt(value.length);
+            value.forEach(element => {
+                protocolRegistration.write(this, element);
+            });
+        }
+    };
+
+    this.readPacketArray = function(protocolId) {
+        const array = [];
+        const length = this.readInt();
+        if (length > 0) {
+            var protocolRegistration = ProtocolManager.getProtocol(protocolId)
+            for (let index = 0; index < length; index++) {
+                array.push(protocolRegistration.read(this));
+            }
+        }
+        return array;
     };
 };
 
